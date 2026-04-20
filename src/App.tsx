@@ -5,7 +5,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform, useSpring, useInView, animate } from 'motion/react';
-import { Menu, X, ChevronRight, Building2, HardHat, Ruler, Phone, Mail, MapPin, ArrowUpRight } from 'lucide-react';
+import { Menu, X, ChevronRight, Building2, HardHat, Ruler, Phone, Mail, MapPin, ArrowUpRight, ArrowLeft, ChevronLeft } from 'lucide-react';
+import { BrowserRouter, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom';
 
 const SectionWrapper = ({ children, className = "", id = "" }: { children: React.ReactNode, className?: string, id?: string }) => {
   return (
@@ -25,6 +26,8 @@ const SectionWrapper = ({ children, className = "", id = "" }: { children: React
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -33,34 +36,39 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Inicio', href: '#' },
-    { name: 'Proyectos', href: '#proyectos' },
+    { name: 'Inicio', href: '/' },
+    { name: 'Proyectos', href: '/proyectos' },
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${scrolled ? 'py-4 glass shadow-sm' : 'py-8 bg-transparent'}`}>
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${scrolled || !isHomePage ? 'py-4 glass shadow-sm' : 'py-8 bg-transparent'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         <motion.div 
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           className="flex items-center gap-2"
         >
-          <span className={`text-2xl font-bold tracking-tighter transition-colors ${scrolled ? 'text-primary' : 'text-white'}`}>sefirot.desarrollos</span>
+          <Link to="/" className={`text-2xl font-bold tracking-tighter transition-colors ${scrolled || !isHomePage ? 'text-primary' : 'text-white'}`}>
+            sefirot.desarrollos
+          </Link>
         </motion.div>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
           {navLinks.map((link, i) => (
-            <motion.a
+            <motion.div
               key={link.name}
-              href={link.href}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              className={`text-[10px] font-black hover:text-primary transition-colors uppercase tracking-[0.3em] ${scrolled ? 'text-stone-900' : 'text-white'}`}
             >
-              {link.name}
-            </motion.a>
+              <Link
+                to={link.href}
+                className={`text-[10px] font-black hover:text-primary transition-colors uppercase tracking-[0.3em] ${scrolled || !isHomePage ? 'text-stone-900' : 'text-white'}`}
+              >
+                {link.name}
+              </Link>
+            </motion.div>
           ))}
           <MagneticButton>
             <motion.a
@@ -79,7 +87,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Toggle */}
-        <button className={`md:hidden transition-colors ${scrolled ? 'text-stone-900' : 'text-white'}`} onClick={() => setIsOpen(!isOpen)}>
+        <button className={`md:hidden transition-colors ${scrolled || !isHomePage ? 'text-stone-900' : 'text-white'}`} onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
@@ -101,17 +109,20 @@ const Navbar = () => {
               <X size={32} />
             </button>
             {navLinks.map((link, i) => (
-              <motion.a
+              <motion.div
                 key={link.name}
-                href={link.href}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 + 0.2 }}
-                onClick={() => setIsOpen(false)}
-                className="text-4xl font-bold hover:text-primary transition-colors uppercase tracking-[0.2em]"
               >
-                {link.name}
-              </motion.a>
+                <Link
+                  to={link.href}
+                  onClick={() => setIsOpen(false)}
+                  className="text-4xl font-bold hover:text-primary transition-colors uppercase tracking-[0.2em]"
+                >
+                  {link.name}
+                </Link>
+              </motion.div>
             ))}
             <motion.a
               href="https://api.whatsapp.com/send?phone=5493416910558&text=Hola!%20Me%20comunico%20desde%20la%20web!"
@@ -267,14 +278,16 @@ const Hero = () => {
               className="flex flex-wrap gap-6 pt-4"
             >
               <MagneticButton>
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="bg-primary text-white px-10 py-5 rounded-full font-bold uppercase tracking-widest flex items-center gap-3 group shadow-2xl shadow-primary/30"
-                >
-                  Explorar Obras
-                  <ArrowUpRight size={22} className="group-hover:rotate-45 transition-transform duration-500" />
-                </motion.button>
+                <Link to="/proyectos">
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="bg-primary text-white px-10 py-5 rounded-full font-bold uppercase tracking-widest flex items-center gap-3 group shadow-2xl shadow-primary/30"
+                  >
+                    Explorar Obras
+                    <ArrowUpRight size={22} className="group-hover:rotate-45 transition-transform duration-500" />
+                  </motion.button>
+                </Link>
               </MagneticButton>
             </motion.div>
           </div>
@@ -403,13 +416,15 @@ const Projects = () => {
               Nuestros proyectos están ubicados en las mejores zonas de nuestra ciudad, rodeados de verdes y parques, pensando espacios confortables y a tu medida.
             </motion.p>
           </div>
-          <motion.button
-            whileHover={{ x: 15 }}
-            className="flex items-center gap-3 text-stone-500 font-bold uppercase tracking-[0.3em] text-[10px] group transition-all"
-          >
-            Ver Portafolio Completo
-            <ChevronRight size={16} className="text-primary" />
-          </motion.button>
+          <Link to="/proyectos">
+            <motion.button
+              whileHover={{ x: 15 }}
+              className="flex items-center gap-3 text-stone-500 font-bold uppercase tracking-[0.3em] text-[10px] group transition-all"
+            >
+              Ver Portafolio Completo
+              <ChevronRight size={16} className="text-primary" />
+            </motion.button>
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -846,6 +861,342 @@ const BackgroundElements = () => {
   );
 };
 
+const ProjectCarousel = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const navigate = useNavigate();
+  
+  const itemsPerPage = typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : 3;
+  const maxIndex = CIRCULAR_PROJECT_IMAGES.length - itemsPerPage;
+
+  const next = () => {
+    setCurrentIndex((prev) => (prev + 1) % (maxIndex + 1));
+  };
+
+  const prev = () => {
+    setCurrentIndex((prev) => (prev - 1 + (maxIndex + 1)) % (maxIndex + 1));
+  };
+
+  useEffect(() => {
+    const timer = setInterval(next, 5000);
+    return () => clearInterval(timer);
+  }, [maxIndex]);
+
+  return (
+    <SectionWrapper className="py-24 bg-stone-50 overflow-hidden px-6">
+      <div className="max-w-7xl mx-auto relative group/carousel">
+        <div className="text-center mb-16">
+          <motion.span 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-primary font-black uppercase tracking-[0.5em] text-[10px] mb-4 block"
+          >
+            Nuestros Hitos
+          </motion.span>
+          <h2 className="text-5xl font-bold tracking-tighter">Explora <span className="italic font-light">la Trayectoria</span></h2>
+        </div>
+
+        <div className="flex items-center justify-between gap-4 relative">
+          {/* Navigation Arrows */}
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 z-30 transition-transform duration-500">
+            <button 
+              onClick={prev}
+              className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-stone-200 flex items-center justify-center hover:bg-stone-900 hover:text-white transition-all duration-500 bg-white shadow-xl hover:scale-110 active:scale-95 shrink-0"
+            >
+              <ChevronLeft size={20} />
+            </button>
+          </div>
+
+          <div className="absolute right-0 top-1/2 -translate-y-1/2 z-30 transition-transform duration-500">
+            <button 
+              onClick={next}
+              className="w-12 h-12 md:w-14 md:h-14 rounded-full border border-stone-200 flex items-center justify-center hover:bg-stone-900 hover:text-white transition-all duration-500 bg-white shadow-xl hover:scale-110 active:scale-95 shrink-0"
+            >
+              <ChevronRight size={20} />
+            </button>
+          </div>
+
+          <div className="flex-1 overflow-hidden relative px-4 py-16">
+            {/* Gradient Masks to hide the edges smoothly */}
+            <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-stone-50 to-transparent z-20 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-stone-50 to-transparent z-20 pointer-events-none" />
+
+            <motion.div 
+              animate={{ x: `-${currentIndex * (100 / itemsPerPage)}%` }}
+              transition={{ type: "spring", stiffness: 80, damping: 20 }}
+              className="flex"
+            >
+              {CIRCULAR_PROJECT_IMAGES.map((item) => (
+                <div key={item.id} className="min-w-full md:min-w-[33.333%] flex justify-center px-4">
+                  <motion.div
+                    whileHover={{ scale: 1.05, y: -10 }}
+                    onClick={() => navigate('/proyectos', { state: { openProjectId: item.id } })}
+                    className="w-48 h-48 md:w-64 md:h-64 rounded-full overflow-hidden border-4 border-white shadow-[0_20px_50px_-20px_rgba(0,0,0,0.25)] cursor-pointer relative group bg-stone-200"
+                  >
+                    <img 
+                      src={item.url} 
+                      alt={item.title} 
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
+                      referrerPolicy="no-referrer"
+                    />
+                    <div className="absolute inset-0 bg-stone-900/30 group-hover:bg-transparent transition-colors duration-500" />
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                      <span className="text-6xl md:text-8xl font-black text-white/40 group-hover:text-white/10 transition-all duration-500 font-sans">
+                        {item.id}
+                      </span>
+                    </div>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-stone-900/40">
+                      <span className="text-white font-black uppercase tracking-[0.2em] text-[9px] transform translate-y-4 group-hover:translate-y-0 transition-transform">Ver {item.id}</span>
+                    </div>
+                  </motion.div>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </SectionWrapper>
+  );
+};
+
+const Home = () => {
+  return (
+    <main className="relative z-10">
+      <Hero />
+      <About />
+      <ProjectCarousel />
+      <Projects />
+      <Stats />
+      <Services />
+      <Contact />
+    </main>
+  );
+};
+
+/**
+ * CONFIGURACIÓN DE IMÁGENES CIRCULARES (Home)
+ * Aquí puedes cambiar las imágenes de los 9 círculos que aparecen en el carrusel de inicio.
+ */
+const CIRCULAR_PROJECT_IMAGES = Array.from({ length: 9 }, (_, i) => ({
+  id: i + 1,
+  url: `https://picsum.photos/seed/sef-circle-${i + 1}/400/400`,
+  title: `Círculo Proyecto ${i + 1}`
+}));
+
+/**
+ * CONFIGURACIÓN DE PROYECTOS
+ * Aquí puedes cambiar las imágenes y textos de los 9 proyectos.
+ * Para cada proyecto puedes definir una imagen principal y una galería de 4 fotos.
+ */
+const PROJECTS_LIST = Array.from({ length: 9 }, (_, i) => ({
+  id: i + 1,
+  title: `Sefirot ${i + 1}`,
+  category: "Desarrollo Inmobiliario",
+  mainImage: `https://picsum.photos/seed/sefirot-main-${i + 1}/1200/800`,
+  description: "Este proyecto representa nuestra visión de la arquitectura contemporánea: una síntesis perfecta entre espacialidad, luz natural y terminaciones de alta gama. Ubicado en puntos estratégicos de Rosario.",
+  gallery: [
+    `https://picsum.photos/seed/sef-gal-${i + 1}-1/800/600`,
+    `https://picsum.photos/seed/sef-gal-${i + 1}-2/800/600`,
+    `https://picsum.photos/seed/sef-gal-${i + 1}-3/800/600`,
+    `https://picsum.photos/seed/sef-gal-${i + 1}-4/800/600`,
+  ]
+}));
+
+const ProjectsPage = () => {
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const location = useLocation();
+
+  const selectedProject = PROJECTS_LIST.find(p => p.id === selectedId);
+  const allProjectImages = selectedProject ? [selectedProject.mainImage, ...selectedProject.gallery] : [];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    // Check if we reached this page from the carousel with a specific project to open
+    if (location.state?.openProjectId) {
+      setSelectedId(location.state.openProjectId);
+      setActiveImageIndex(0);
+    }
+  }, [location.state]);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (selectedId) {
+      interval = setInterval(() => {
+        setActiveImageIndex((prev) => (prev + 1) % allProjectImages.length);
+      }, 5000);
+    }
+    return () => clearInterval(interval);
+  }, [selectedId, allProjectImages.length, activeImageIndex]);
+
+  return (
+    <main className="min-h-screen bg-stone-950 pt-40 pb-40 px-6">
+      <div className="max-w-7xl mx-auto">
+        <header className="mb-24 text-center">
+          <motion.span 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-primary font-black uppercase tracking-[0.5em] text-[10px] mb-6 block"
+          >
+            Portafolio Completo
+          </motion.span>
+          <RevealText className="text-6xl md:text-9xl font-bold tracking-tighter leading-tight text-white inline-block">
+            Nuestros <span className="italic font-light text-stone-300">Desarrollos.</span>
+          </RevealText>
+        </header>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+          {PROJECTS_LIST.map((project, idx) => (
+            <motion.div
+              layoutId={`card-${project.id}`}
+              onClick={() => {
+                setSelectedId(project.id);
+                setActiveImageIndex(0);
+              }}
+              key={project.id}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: idx * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="group relative aspect-square overflow-hidden rounded-[3rem] bg-stone-900 cursor-pointer shadow-2xl border border-white/5"
+            >
+              <motion.img 
+                layoutId={`image-${project.id}`}
+                src={project.mainImage}
+                alt={project.title}
+                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+              
+              <div className="absolute bottom-12 left-12 overflow-hidden">
+                <motion.h3 
+                  layoutId={`title-${project.id}`}
+                  className="text-4xl font-bold text-white tracking-tighter"
+                >
+                  {project.title}
+                </motion.h3>
+                <div className="flex items-center gap-3 mt-4 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
+                  <span className="text-primary font-black uppercase tracking-widest text-[10px]">Ver Detalles</span>
+                  <div className="w-6 h-px bg-primary" />
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      <AnimatePresence>
+        {selectedId && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSelectedId(null)}
+              className="absolute inset-0 bg-stone-950/98 backdrop-blur-2xl z-0"
+            />
+            
+            <motion.div 
+              layoutId={`card-${selectedId}`}
+              initial={{ opacity: 1 }}
+              animate={{ opacity: 1 }}
+              className="relative w-full max-w-6xl max-h-[90vh] bg-stone-50 rounded-[4rem] overflow-hidden shadow-2xl flex flex-col md:flex-row border border-white/10 z-10"
+            >
+              <button 
+                onClick={() => setSelectedId(null)}
+                className="absolute top-8 right-8 z-[60] p-5 bg-white shadow-xl hover:bg-stone-50 rounded-full transition-all group scale-90 md:scale-100"
+              >
+                <X size={24} className="group-hover:rotate-90 transition-transform duration-500" />
+              </button>
+
+              <div className="w-full md:w-1/2 h-[400px] md:h-auto relative overflow-hidden bg-stone-200">
+                <AnimatePresence mode="wait">
+                  <motion.img 
+                    key={activeImageIndex}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.8, ease: "easeInOut" }}
+                    src={allProjectImages[activeImageIndex]}
+                    alt="Current Display"
+                    className="absolute inset-0 w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
+                  />
+                </AnimatePresence>
+                
+                {/* Progress bar for slideshow */}
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-white/20 z-10">
+                  <motion.div 
+                    key={activeImageIndex}
+                    initial={{ width: 0 }}
+                    animate={{ width: "100%" }}
+                    transition={{ duration: 5, ease: "linear" }}
+                    className="h-full bg-primary"
+                  />
+                </div>
+                
+                <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/40 to-transparent pointer-events-none" />
+              </div>
+
+              <div className="w-full md:w-1/2 p-10 md:p-20 overflow-y-auto bg-white custom-scrollbar">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  <span className="text-primary font-black uppercase tracking-[0.5em] text-[10px] mb-6 block">Proyecto en Detalle</span>
+                  <h2 className="text-5xl md:text-8xl font-black tracking-tighter mb-8 text-stone-900">
+                    {selectedProject?.title}
+                  </h2>
+                  <p className="text-xl text-stone-500 font-light leading-relaxed mb-16">
+                    {selectedProject?.description}
+                  </p>
+
+                  <div className="grid grid-cols-2 gap-6">
+                    {allProjectImages.map((img, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        transition={{ delay: 0.4 + i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                        onClick={() => setActiveImageIndex(i)}
+                        className={`aspect-[4/3] rounded-[2rem] overflow-hidden shadow-lg group border-4 cursor-pointer transition-all duration-500 relative ${activeImageIndex === i ? 'border-primary' : 'border-stone-100'}`}
+                      >
+                        <img 
+                          src={img} 
+                          alt={`Gallery ${i}`} 
+                          className={`w-full h-full object-cover transition-transform duration-1000 ${activeImageIndex === i ? 'scale-110' : 'group-hover:scale-105'}`} 
+                          referrerPolicy="no-referrer"
+                        />
+                        {activeImageIndex !== i && (
+                          <div className="absolute inset-0 bg-white/40 group-hover:bg-transparent transition-colors duration-500" />
+                        )}
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  <div className="mt-20 pt-10 border-t border-stone-100 flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="w-3 h-3 rounded-full bg-primary" />
+                      <span className="text-[10px] font-black uppercase tracking-[0.4em] text-stone-400">Rosario, Argentina</span>
+                    </div>
+                    <motion.button
+                      whileHover={{ x: -10 }}
+                      onClick={() => setSelectedId(null)}
+                      className="flex items-center gap-3 text-stone-900 font-black uppercase tracking-[0.3em] text-[10px] hover:text-primary transition-all"
+                    >
+                      <ArrowLeft size={16} /> Volver
+                    </motion.button>
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+    </main>
+  );
+};
+
 export default function App() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
@@ -855,23 +1206,21 @@ export default function App() {
   });
 
   return (
-    <div className="min-h-screen selection:bg-primary selection:text-white bg-stone-50">
-      <CustomCursor />
-      <BackgroundElements />
-      <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-primary z-[60] origin-left"
-        style={{ scaleX }}
-      />
-      <Navbar />
-      <main className="relative z-10">
-        <Hero />
-        <About />
-        <Projects />
-        <Stats />
-        <Services />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <BrowserRouter>
+      <div className="min-h-screen selection:bg-primary selection:text-white bg-stone-50">
+        <CustomCursor />
+        <BackgroundElements />
+        <motion.div
+          className="fixed top-0 left-0 right-0 h-1 bg-primary z-[60] origin-left"
+          style={{ scaleX }}
+        />
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/proyectos" element={<ProjectsPage />} />
+        </Routes>
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
 }
