@@ -315,10 +315,11 @@ interface ProjectCardProps {
   delay: number;
 }
 
-const RevealImage = ({ src, alt, className = "", delay = 0 }: { src: string, alt: string, className?: string, delay?: number }) => {
+const RevealImage = ({ src, alt, className = "", delay = 0, layoutId }: { src: string, alt: string, className?: string, delay?: number, layoutId?: string }) => {
   return (
     <div className={`relative overflow-hidden ${className}`}>
       <motion.div
+        layoutId={layoutId}
         initial={{ scale: 1.5, opacity: 0 }}
         whileInView={{ scale: 1, opacity: 1 }}
         viewport={{ once: true }}
@@ -935,15 +936,10 @@ const ProjectCarousel = () => {
                     <img 
                       src={item.url} 
                       alt={item.title} 
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-in-out"
                       referrerPolicy="no-referrer"
                     />
-                    <div className="absolute inset-0 bg-stone-900/30 group-hover:bg-transparent transition-colors duration-500" />
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                      <span className="text-6xl md:text-8xl font-black text-white/40 group-hover:text-white/10 transition-all duration-500 font-sans">
-                        {item.id}
-                      </span>
-                    </div>
+                    <div className="absolute inset-0 bg-primary/50 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500 ease-in-out" />
                     <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-stone-900/40">
                       <span className="text-white font-black uppercase tracking-[0.2em] text-[9px] transform translate-y-4 group-hover:translate-y-0 transition-transform">Ver {item.id}</span>
                     </div>
@@ -975,31 +971,154 @@ const Home = () => {
 /**
  * CONFIGURACIÓN DE IMÁGENES CIRCULARES (Home)
  * Aquí puedes cambiar las imágenes de los 9 círculos que aparecen en el carrusel de inicio.
+ * Cambia el enlace dentro de "url" por la imagen que desees para cada número.
  */
-const CIRCULAR_PROJECT_IMAGES = Array.from({ length: 9 }, (_, i) => ({
-  id: i + 1,
-  url: `https://picsum.photos/seed/sef-circle-${i + 1}/400/400`,
-  title: `Círculo Proyecto ${i + 1}`
-}));
+const CIRCULAR_PROJECT_IMAGES = [
+  { id: 1, url: "https://i.postimg.cc/rsgnhkrp/Numeros-Sefirot-01.png", title: "Círculo Proyecto 1" },
+  { id: 2, url: "https://i.postimg.cc/nrTRdJDX/Numeros-Sefirot-02.png", title: "Círculo Proyecto 2" },
+  { id: 3, url: "https://i.postimg.cc/jqhFqzkB/Numeros-Sefirot-03.png", title: "Círculo Proyecto 3" },
+  { id: 4, url: "https://i.postimg.cc/ZYLMYrD1/Numeros-Sefirot-04.png", title: "Círculo Proyecto 4" },
+  { id: 5, url: "https://i.postimg.cc/L4Vb4zbd/Numeros-Sefirot-05.png", title: "Círculo Proyecto 5" },
+  { id: 6, url: "https://i.postimg.cc/Kc5Hcnsw/Numeros-Sefirot-06.png", title: "Círculo Proyecto 6" },
+  { id: 7, url: "https://i.postimg.cc/RVVbWNkN/Numeros-Sefirot-07.png", title: "Círculo Proyecto 7" },
+  { id: 8, url: "https://i.postimg.cc/wMFfWpmM/Numeros-Sefirot-08.png", title: "Círculo Proyecto 8" },
+  { id: 9, url: "https://i.postimg.cc/yxnQfHZk/Numeros-Sefirot-09.png", title: "Círculo Proyecto 9" },
+];
 
 /**
  * CONFIGURACIÓN DE PROYECTOS
- * Aquí puedes cambiar las imágenes y textos de los 9 proyectos.
- * Para cada proyecto puedes definir una imagen principal y una galería de 4 fotos.
+ * Aquí puedes cambiar las imágenes y textos de los 9 proyectos de la página "Proyectos".
+ * mainImage: Imagen de la tarjeta principal.
+ * gallery: Las 4 imágenes que aparecen al abrir el proyecto.
  */
-const PROJECTS_LIST = Array.from({ length: 9 }, (_, i) => ({
-  id: i + 1,
-  title: `Sefirot ${i + 1}`,
-  category: "Desarrollo Inmobiliario",
-  mainImage: `https://picsum.photos/seed/sefirot-main-${i + 1}/1200/800`,
-  description: "Este proyecto representa nuestra visión de la arquitectura contemporánea: una síntesis perfecta entre espacialidad, luz natural y terminaciones de alta gama. Ubicado en puntos estratégicos de Rosario.",
-  gallery: [
-    `https://picsum.photos/seed/sef-gal-${i + 1}-1/800/600`,
-    `https://picsum.photos/seed/sef-gal-${i + 1}-2/800/600`,
-    `https://picsum.photos/seed/sef-gal-${i + 1}-3/800/600`,
-    `https://picsum.photos/seed/sef-gal-${i + 1}-4/800/600`,
-  ]
-}));
+const PROJECTS_LIST = [
+  {
+    id: 1,
+    title: "Sefirot 1",
+    address: "RODRIGUEZ 1694",
+    category: "Desarrollo Inmobiliario",
+    mainImage: "https://picsum.photos/seed/sefirot-main-1/1200/800",
+    description: "Donde el diseño se encuentra con la armonía. Ubicado en una esquina privilegiada, este proyecto destaca por su aprovechamiento integral de la luz y una arquitectura que dialoga con el entorno residencial. Ideal para quienes buscan tranquilidad sin alejarse del pulso urbano.",
+    gallery: [
+      "https://picsum.photos/seed/sef-gal-1-1/800/600",
+      "https://picsum.photos/seed/sef-gal-1-2/800/600",
+      "https://picsum.photos/seed/sef-gal-1-3/800/600",
+      "https://picsum.photos/seed/sef-gal-1-4/800/600",
+    ]
+  },
+  {
+    id: 2,
+    title: "Sefirot 2",
+    address: "9 DE JULIO 1547",
+    category: "Desarrollo Inmobiliario",
+    mainImage: "https://picsum.photos/seed/sefirot-main-2/1200/800",
+    description: "Modernidad en el corazón de la ciudad. Una propuesta pensada para el ritmo de vida actual. Espacios funcionales con terminaciones premium, situados en un punto estratégico que conecta la comodidad del centro con la calidez de un barrio tradicional.",
+    gallery: [
+      "https://picsum.photos/seed/sef-gal-2-1/800/600",
+      "https://picsum.photos/seed/sef-gal-2-2/800/600",
+      "https://picsum.photos/seed/sef-gal-2-3/800/600",
+      "https://picsum.photos/seed/sef-gal-2-4/800/600",
+    ]
+  },
+  {
+    id: 3,
+    title: "Sefirot 3",
+    address: "MARTIN RODRIGUEZ 1665",
+    category: "Desarrollo Inmobiliario",
+    mainImage: "https://picsum.photos/seed/sefirot-main-3/1200/800",
+    description: "Sofisticación y confort térmico. Este edificio redefine la experiencia de vivir en el centro-norte. Con una estética vanguardista y materiales de alta calidad, SEF 3 ofrece ambientes amplios diseñados para maximizar la entrada de aire y luz natural.",
+    gallery: [
+      "https://picsum.photos/seed/sef-gal-3-1/800/600",
+      "https://picsum.photos/seed/sef-gal-3-2/800/600",
+      "https://picsum.photos/seed/sef-gal-3-3/800/600",
+      "https://picsum.photos/seed/sef-gal-3-4/800/600",
+    ]
+  },
+  {
+    id: 4,
+    title: "Sefirot 4",
+    address: "MONTEVIDEO 2517",
+    category: "Desarrollo Inmobiliario",
+    mainImage: "https://picsum.photos/seed/sefirot-main-4/1200/800",
+    description: "Equilibrio entre lo clásico y lo contemporáneo. Situado en una zona de gran crecimiento, este proyecto combina una fachada impactante con interiores minimalistas. Es la síntesis perfecta de espacialidad y diseño, pensado para quienes valoran los detalles constructivos.",
+    gallery: [
+      "https://picsum.photos/seed/sef-gal-4-1/800/600",
+      "https://picsum.photos/seed/sef-gal-4-2/800/600",
+      "https://picsum.photos/seed/sef-gal-4-3/800/600",
+      "https://picsum.photos/seed/sef-gal-4-4/800/600",
+    ]
+  },
+  {
+    id: 5,
+    title: "Sefirot 5",
+    address: "PELLEGRINI 2618",
+    category: "Desarrollo Inmobiliario",
+    mainImage: "https://picsum.photos/seed/sefirot-main-5/1200/800",
+    description: "Vida urbana con vistas inmejorables. Ubicado sobre una de las arterias más importantes de Rosario, SEF 5 ofrece una conexión directa con la recreación y los servicios. Arquitectura de alta gama con un enfoque en la durabilidad y el estilo de vida cosmopolita.",
+    gallery: [
+      "https://picsum.photos/seed/sef-gal-5-1/800/600",
+      "https://picsum.photos/seed/sef-gal-5-2/800/600",
+      "https://picsum.photos/seed/sef-gal-5-3/800/600",
+      "https://picsum.photos/seed/sef-gal-5-4/800/600",
+    ]
+  },
+  {
+    id: 6,
+    title: "Sefirot 6",
+    address: "OV LAGOS 1141",
+    category: "Desarrollo Inmobiliario",
+    mainImage: "https://picsum.photos/seed/sefirot-main-6/1200/800",
+    description: "Innovación en cada metro cuadrado. Un proyecto que destaca por su geometría limpia y soluciones espaciales inteligentes. SEF 6 es la opción ideal para inversores y residentes que buscan una ubicación dinámica con un estándar de construcción superior.",
+    gallery: [
+      "https://picsum.photos/seed/sef-gal-6-1/800/600",
+      "https://picsum.photos/seed/sef-gal-6-2/800/600",
+      "https://picsum.photos/seed/sef-gal-6-3/800/600",
+      "https://picsum.photos/seed/sef-gal-6-4/800/600",
+    ]
+  },
+  {
+    id: 7,
+    title: "Sefirot 7",
+    address: "OV LAGOS 1261",
+    category: "Desarrollo Inmobiliario",
+    mainImage: "https://picsum.photos/seed/sefirot-main-7/1200/800",
+    description: "El estándar de calidad que estabas buscando. Continuando con nuestra línea de excelencia sobre Av. Ovidio Lagos, este edificio se centra en la amplitud de sus ambientes and la selección de materiales nobles, garantizando una inversión segura y una habitabilidad excepcional.",
+    gallery: [
+      "https://picsum.photos/seed/sef-gal-7-1/800/600",
+      "https://picsum.photos/seed/sef-gal-7-2/800/600",
+      "https://picsum.photos/seed/sef-gal-7-3/800/600",
+      "https://picsum.photos/seed/sef-gal-7-4/800/600",
+    ]
+  },
+  {
+    id: 8,
+    title: "Sefirot 8",
+    address: "RODRIGUEZ 1680",
+    category: "Desarrollo Inmobiliario",
+    mainImage: "https://picsum.photos/seed/sefirot-main-8/1200/800",
+    description: "Exclusividad y diseño de autor. A pasos de los principales parques de la ciudad, SEF 8 propone una arquitectura abierta y luminosa. Cada unidad refleja nuestro compromiso con las terminaciones de lujo y la optimización de los espacios comunes.",
+    gallery: [
+      "https://picsum.photos/seed/sef-gal-8-1/800/600",
+      "https://picsum.photos/seed/sef-gal-8-2/800/600",
+      "https://picsum.photos/seed/sef-gal-8-3/800/600",
+      "https://picsum.photos/seed/sef-gal-8-4/800/600",
+    ]
+  },
+  {
+    id: 9,
+    title: "Sefirot 9",
+    address: "MONTEVIDEO 1876",
+    category: "Desarrollo Inmobiliario",
+    mainImage: "https://picsum.photos/seed/sefirot-main-9/1200/800",
+    description: "Tu refugio en el centro de Rosario. Una propuesta que prioriza la intimidad y el confort. Con una ubicación estratégica cerca de facultades y centros comerciales, este edificio equilibra la funcionalidad con el sello estético característico de Sefirot.",
+    gallery: [
+      "https://picsum.photos/seed/sef-gal-9-1/800/600",
+      "https://picsum.photos/seed/sef-gal-9-2/800/600",
+      "https://picsum.photos/seed/sef-gal-9-3/800/600",
+      "https://picsum.photos/seed/sef-gal-9-4/800/600",
+    ]
+  }
+];
 
 const ProjectsPage = () => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
@@ -1053,30 +1172,39 @@ const ProjectsPage = () => {
                 setActiveImageIndex(0);
               }}
               key={project.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: idx * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="group relative aspect-square overflow-hidden rounded-[3rem] bg-stone-900 cursor-pointer shadow-2xl border border-white/5"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: idx * 0.1, duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="group relative aspect-square overflow-hidden rounded-[2.5rem] bg-stone-900 cursor-pointer shadow-2xl border border-white/5"
             >
-              <motion.img 
+              <RevealImage 
+                src={project.mainImage} 
+                alt={project.title} 
+                delay={idx * 0.05}
                 layoutId={`image-${project.id}`}
-                src={project.mainImage}
-                alt={project.title}
-                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                referrerPolicy="no-referrer"
+                className="w-full h-full transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-transparent to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
               
-              <div className="absolute bottom-12 left-12 overflow-hidden">
-                <motion.h3 
-                  layoutId={`title-${project.id}`}
-                  className="text-4xl font-bold text-white tracking-tighter"
-                >
-                  {project.title}
-                </motion.h3>
-                <div className="flex items-center gap-3 mt-4 opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500">
-                  <span className="text-primary font-black uppercase tracking-widest text-[10px]">Ver Detalles</span>
-                  <div className="w-6 h-px bg-primary" />
+              <div className="absolute inset-0 bg-stone-950/60 opacity-0 group-hover:opacity-100 transition-all duration-700 backdrop-blur-[3px] z-20" />
+              
+              <div className="absolute inset-0 p-10 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0 z-30">
+                <div className="flex justify-between items-start">
+                  <span className="text-white/60 font-black uppercase tracking-[0.4em] text-[10px]">
+                    {project.category}
+                  </span>
+                  <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white">
+                    <ArrowUpRight size={18} />
+                  </div>
+                </div>
+                
+                <div>
+                  <motion.h3 
+                    layoutId={`title-${project.id}`}
+                    className="text-4xl font-bold text-white tracking-tighter mb-2"
+                  >
+                    {project.title}
+                  </motion.h3>
+                  <div className="w-12 h-1 bg-primary rounded-full" />
                 </div>
               </div>
             </motion.div>
@@ -1144,9 +1272,12 @@ const ProjectsPage = () => {
                   transition={{ delay: 0.3 }}
                 >
                   <span className="text-primary font-black uppercase tracking-[0.5em] text-[10px] mb-6 block">Proyecto en Detalle</span>
-                  <h2 className="text-5xl md:text-8xl font-black tracking-tighter mb-8 text-stone-900">
+                  <h2 className="text-5xl md:text-8xl font-black tracking-tighter mb-4 text-stone-900">
                     {selectedProject?.title}
                   </h2>
+                  <h3 className="text-xl md:text-2xl font-bold text-primary uppercase tracking-[0.2em] mb-12">
+                    {selectedProject?.address}
+                  </h3>
                   <p className="text-xl text-stone-500 font-light leading-relaxed mb-16">
                     {selectedProject?.description}
                   </p>
