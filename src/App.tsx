@@ -313,6 +313,7 @@ interface ProjectCardProps {
   category: string;
   image: string;
   delay: number;
+  badge?: string;
 }
 
 const RevealImage = ({ src, alt, className = "", delay = 0, layoutId }: { src: string, alt: string, className?: string, delay?: number, layoutId?: string }) => {
@@ -344,7 +345,7 @@ const RevealImage = ({ src, alt, className = "", delay = 0, layoutId }: { src: s
   );
 };
 
-const ProjectCard = ({ title, category, image, delay }: ProjectCardProps) => {
+const ProjectCard = ({ title, category, image, delay, badge }: ProjectCardProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 100 }}
@@ -359,6 +360,16 @@ const ProjectCard = ({ title, category, image, delay }: ProjectCardProps) => {
         delay={delay}
         className="w-full h-full transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1"
       />
+
+      {badge && (
+        <div className="absolute top-6 left-6 z-40 group-hover:opacity-0 transition-opacity duration-300">
+          <div className="glass px-4 py-1.5 rounded-full border border-primary/30 shadow-lg flex items-center justify-center">
+            <span className="text-primary text-[10px] font-black tracking-[0.2em] uppercase text-center">
+              {badge}
+            </span>
+          </div>
+        </div>
+      )}
       
       <div className="absolute inset-0 bg-stone-950/40 opacity-0 group-hover:opacity-100 transition-all duration-700 backdrop-blur-[2px] z-20" />
       
@@ -499,6 +510,25 @@ const Services = () => {
 };
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    nombre: '',
+    email: '',
+    mensaje: ''
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const { nombre, email, mensaje } = formData;
+    const subject = encodeURIComponent(`Consulta de ${nombre} - Sefirot Desarrollos`);
+    const body = encodeURIComponent(`Nombre: ${nombre}\nEmail: ${email}\n\nMensaje:\n${mensaje}`);
+    window.location.href = `mailto:contacto@sefirot.com.ar?subject=${subject}&body=${body}`;
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
   return (
     <SectionWrapper id="contacto" className="py-40 px-6 bg-stone-950 text-white overflow-hidden relative">
       <div className="absolute top-0 right-0 w-full h-full opacity-10 pointer-events-none">
@@ -557,13 +587,17 @@ const Contact = () => {
             viewport={{ once: true }}
             className="bg-white/[0.02] backdrop-blur-3xl p-16 rounded-[3rem] border border-white/10 shadow-2xl"
           >
-            <form className="space-y-10">
+            <form onSubmit={handleSubmit} className="space-y-10">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                 <div className="space-y-4">
                   <label className="text-[10px] uppercase tracking-[0.4em] text-stone-500 font-black">Nombre</label>
                   <motion.input 
                     whileFocus={{ scale: 1.02 }}
                     type="text" 
+                    name="nombre"
+                    value={formData.nombre}
+                    onChange={handleChange}
+                    required
                     className="w-full bg-transparent border-b border-white/20 py-4 focus:border-primary outline-none transition-colors text-xl font-light" 
                     placeholder="Juan Pérez" 
                   />
@@ -573,6 +607,10 @@ const Contact = () => {
                   <motion.input 
                     whileFocus={{ scale: 1.02 }}
                     type="email" 
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
                     className="w-full bg-transparent border-b border-white/20 py-4 focus:border-primary outline-none transition-colors text-xl font-light" 
                     placeholder="juan@ejemplo.com" 
                   />
@@ -582,6 +620,10 @@ const Contact = () => {
                 <label className="text-[10px] uppercase tracking-[0.4em] text-stone-500 font-black">Mensaje</label>
                 <motion.textarea 
                   whileFocus={{ scale: 1.02 }}
+                  name="mensaje"
+                  value={formData.mensaje}
+                  onChange={handleChange}
+                  required
                   rows={4} 
                   className="w-full bg-transparent border-b border-white/20 py-4 focus:border-primary outline-none transition-colors text-xl font-light resize-none" 
                   placeholder="Cuéntanos sobre tu visión..."
@@ -591,6 +633,7 @@ const Contact = () => {
                 <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
+                  type="submit"
                   className="w-full bg-primary text-white py-6 rounded-full font-black uppercase tracking-[0.4em] text-[12px] shadow-2xl shadow-primary/40"
                 >
                   Enviar Mensaje
@@ -997,13 +1040,13 @@ const PROJECTS_LIST = [
     title: "Sefirot 1",
     address: "RODRIGUEZ 1694",
     category: "Desarrollo Inmobiliario",
-    mainImage: "https://picsum.photos/seed/sefirot-main-1/1200/800",
+    mainImage: "https://i.postimg.cc/pXWtYYHV/2-P2604.jpg",
     description: "Donde el diseño se encuentra con la armonía. Ubicado en una esquina privilegiada, este proyecto destaca por su aprovechamiento integral de la luz y una arquitectura que dialoga con el entorno residencial. Ideal para quienes buscan tranquilidad sin alejarse del pulso urbano.",
     gallery: [
-      "https://picsum.photos/seed/sef-gal-1-1/800/600",
-      "https://picsum.photos/seed/sef-gal-1-2/800/600",
-      "https://picsum.photos/seed/sef-gal-1-3/800/600",
-      "https://picsum.photos/seed/sef-gal-1-4/800/600",
+      "https://i.postimg.cc/BQSGcc0v/1-P2604.jpg",
+      "https://i.postimg.cc/tCqHttjC/01.jpg",
+      "https://i.postimg.cc/xTfSyy21/3-P2604.jpg",
+      "https://i.postimg.cc/ZKbhFFSp/DSC-0557.jpg",
     ]
   },
   {
@@ -1011,10 +1054,10 @@ const PROJECTS_LIST = [
     title: "Sefirot 2",
     address: "9 DE JULIO 1547",
     category: "Desarrollo Inmobiliario",
-    mainImage: "https://picsum.photos/seed/sefirot-main-2/1200/800",
+    mainImage: "https://i.postimg.cc/qM32wnXS/DSC-9195.jpg",
     description: "Modernidad en el corazón de la ciudad. Una propuesta pensada para el ritmo de vida actual. Espacios funcionales con terminaciones premium, situados en un punto estratégico que conecta la comodidad del centro con la calidez de un barrio tradicional.",
     gallery: [
-      "https://picsum.photos/seed/sef-gal-2-1/800/600",
+      "https://picsum.photos/seed/sefirot-main-2/1200/800",
       "https://picsum.photos/seed/sef-gal-2-2/800/600",
       "https://picsum.photos/seed/sef-gal-2-3/800/600",
       "https://picsum.photos/seed/sef-gal-2-4/800/600",
@@ -1025,13 +1068,13 @@ const PROJECTS_LIST = [
     title: "Sefirot 3",
     address: "MARTIN RODRIGUEZ 1665",
     category: "Desarrollo Inmobiliario",
-    mainImage: "https://picsum.photos/seed/sefirot-main-3/1200/800",
+    mainImage: "https://i.postimg.cc/mrt9cHkD/03.jpg",
     description: "Sofisticación y confort térmico. Este edificio redefine la experiencia de vivir en el centro-norte. Con una estética vanguardista y materiales de alta calidad, SEF 3 ofrece ambientes amplios diseñados para maximizar la entrada de aire y luz natural.",
     gallery: [
-      "https://picsum.photos/seed/sef-gal-3-1/800/600",
-      "https://picsum.photos/seed/sef-gal-3-2/800/600",
-      "https://picsum.photos/seed/sef-gal-3-3/800/600",
-      "https://picsum.photos/seed/sef-gal-3-4/800/600",
+      "https://i.postimg.cc/CKXqbxn1/06.jpg",
+      "https://i.postimg.cc/zBhR7YTh/DSC-2506.jpg",
+      "https://i.postimg.cc/C18f7pbb/DSC-2564.jpg",
+      "https://i.postimg.cc/zf6gTGHC/DSC-2602.jpg",
     ]
   },
   {
@@ -1039,13 +1082,13 @@ const PROJECTS_LIST = [
     title: "Sefirot 4",
     address: "MONTEVIDEO 2517",
     category: "Desarrollo Inmobiliario",
-    mainImage: "https://picsum.photos/seed/sefirot-main-4/1200/800",
+    mainImage: "https://i.postimg.cc/6q5t3d6v/DSC-4656vale.jpg",
     description: "Equilibrio entre lo clásico y lo contemporáneo. Situado en una zona de gran crecimiento, este proyecto combina una fachada impactante con interiores minimalistas. Es la síntesis perfecta de espacialidad y diseño, pensado para quienes valoran los detalles constructivos.",
     gallery: [
-      "https://picsum.photos/seed/sef-gal-4-1/800/600",
-      "https://picsum.photos/seed/sef-gal-4-2/800/600",
-      "https://picsum.photos/seed/sef-gal-4-3/800/600",
-      "https://picsum.photos/seed/sef-gal-4-4/800/600",
+      "https://i.postimg.cc/k4y7qjC7/2-M2517.jpg",
+      "https://i.postimg.cc/j5hRt8T5/8.jpg",
+      "https://i.postimg.cc/MHKqTyZR/DSC-4667.jpg",
+      "https://i.postimg.cc/zvX8BnDD/IMG-20200524-WA0018.jpg",
     ]
   },
   {
@@ -1053,13 +1096,13 @@ const PROJECTS_LIST = [
     title: "Sefirot 5",
     address: "PELLEGRINI 2618",
     category: "Desarrollo Inmobiliario",
-    mainImage: "https://picsum.photos/seed/sefirot-main-5/1200/800",
+    mainImage: "https://i.postimg.cc/j5SFnvfG/Frente-1.jpg",
     description: "Vida urbana con vistas inmejorables. Ubicado sobre una de las arterias más importantes de Rosario, SEF 5 ofrece una conexión directa con la recreación y los servicios. Arquitectura de alta gama con un enfoque en la durabilidad y el estilo de vida cosmopolita.",
     gallery: [
-      "https://picsum.photos/seed/sef-gal-5-1/800/600",
-      "https://picsum.photos/seed/sef-gal-5-2/800/600",
-      "https://picsum.photos/seed/sef-gal-5-3/800/600",
-      "https://picsum.photos/seed/sef-gal-5-4/800/600",
+      "https://i.postimg.cc/Qtfvfvs5/Azotea-2.jpg",
+      "https://i.postimg.cc/3JsVfXMP/Ingreso-1.jpg",
+      "https://i.postimg.cc/cJmzJPK0/Interior-piso-2.jpg",
+      "https://i.postimg.cc/NFWJVcn8/6.jpg",
     ]
   },
   {
@@ -1067,13 +1110,13 @@ const PROJECTS_LIST = [
     title: "Sefirot 6",
     address: "OV LAGOS 1141",
     category: "Desarrollo Inmobiliario",
-    mainImage: "https://picsum.photos/seed/sefirot-main-6/1200/800",
+    mainImage: "https://i.postimg.cc/h47HLy6x/DJI-0024.jpg",
     description: "Innovación en cada metro cuadrado. Un proyecto que destaca por su geometría limpia y soluciones espaciales inteligentes. SEF 6 es la opción ideal para inversores y residentes que buscan una ubicación dinámica con un estándar de construcción superior.",
     gallery: [
-      "https://picsum.photos/seed/sef-gal-6-1/800/600",
-      "https://picsum.photos/seed/sef-gal-6-2/800/600",
-      "https://picsum.photos/seed/sef-gal-6-3/800/600",
-      "https://picsum.photos/seed/sef-gal-6-4/800/600",
+      "https://i.postimg.cc/v86prqkW/DJI-0022.jpg",
+      "https://i.postimg.cc/2jBPQcMW/DJI-0025.jpg",
+      "https://i.postimg.cc/Pf8BW39Y/DJI-0033.jpg",
+      "https://i.postimg.cc/YqKTbNBJ/MG-3652-HDR.jpg",
     ]
   },
   {
@@ -1081,13 +1124,13 @@ const PROJECTS_LIST = [
     title: "Sefirot 7",
     address: "OV LAGOS 1261",
     category: "Desarrollo Inmobiliario",
-    mainImage: "https://picsum.photos/seed/sefirot-main-7/1200/800",
+    mainImage: "https://i.postimg.cc/brHg6tQX/FACHADA.png",
     description: "El estándar de calidad que estabas buscando. Continuando con nuestra línea de excelencia sobre Av. Ovidio Lagos, este edificio se centra en la amplitud de sus ambientes and la selección de materiales nobles, garantizando una inversión segura y una habitabilidad excepcional.",
     gallery: [
-      "https://picsum.photos/seed/sef-gal-7-1/800/600",
-      "https://picsum.photos/seed/sef-gal-7-2/800/600",
-      "https://picsum.photos/seed/sef-gal-7-3/800/600",
-      "https://picsum.photos/seed/sef-gal-7-4/800/600",
+      "https://i.postimg.cc/cCMhDnfk/FACHADA-2.jpg",
+      "https://i.postimg.cc/gks483zR/IMG-20250530-WA0084.jpg",
+      "https://i.postimg.cc/QdnbnsWt/IMG-20250530-WA0122.jpg",
+      "https://i.postimg.cc/6q0VVNXp/IMG-20250530-WA0056.jpg",
     ]
   },
   {
@@ -1095,13 +1138,14 @@ const PROJECTS_LIST = [
     title: "Sefirot 8",
     address: "RODRIGUEZ 1680",
     category: "Desarrollo Inmobiliario",
-    mainImage: "https://picsum.photos/seed/sefirot-main-8/1200/800",
+    badge: "PROXIMAMENTE",
+    mainImage: "https://i.postimg.cc/5092Ycn9/SEF8-EXTERIOR-URBANA-02.jpg",
     description: "Exclusividad y diseño de autor. A pasos de los principales parques de la ciudad, SEF 8 propone una arquitectura abierta y luminosa. Cada unidad refleja nuestro compromiso con las terminaciones de lujo y la optimización de los espacios comunes.",
     gallery: [
-      "https://picsum.photos/seed/sef-gal-8-1/800/600",
-      "https://picsum.photos/seed/sef-gal-8-2/800/600",
-      "https://picsum.photos/seed/sef-gal-8-3/800/600",
-      "https://picsum.photos/seed/sef-gal-8-4/800/600",
+      "https://i.postimg.cc/nLGLhVYJ/SEF8-EXTERIOR-CONTRAFRENTE-01.jpg",
+      "https://i.postimg.cc/wvxjyK09/SEF8-EXTERIOR-INGRESO-PB-01.jpg",
+      "https://i.postimg.cc/HL9LkW4W/SEF8-EXTERIOR-INGRESO-PB-02.jpg",
+      "https://i.postimg.cc/LX48YdNn/SEF8-EXTERIOR-P3-BALCON-OFICINA.jpg",
     ]
   },
   {
@@ -1109,13 +1153,14 @@ const PROJECTS_LIST = [
     title: "Sefirot 9",
     address: "MONTEVIDEO 1876",
     category: "Desarrollo Inmobiliario",
-    mainImage: "https://picsum.photos/seed/sefirot-main-9/1200/800",
+    badge: "PROXIMAMENTE",
+    mainImage: "https://i.postimg.cc/8CZVY7Bq/QUINCHO-2.png",
     description: "Tu refugio en el centro de Rosario. Una propuesta que prioriza la intimidad y el confort. Con una ubicación estratégica cerca de facultades y centros comerciales, este edificio equilibra la funcionalidad con el sello estético característico de Sefirot.",
     gallery: [
-      "https://picsum.photos/seed/sef-gal-9-1/800/600",
-      "https://picsum.photos/seed/sef-gal-9-2/800/600",
-      "https://picsum.photos/seed/sef-gal-9-3/800/600",
-      "https://picsum.photos/seed/sef-gal-9-4/800/600",
+      "https://i.postimg.cc/fbzN5cmM/FACHADA-2.png",
+      "https://i.postimg.cc/R0gzYWLr/HALL-INGRESO-2.png",
+      "https://i.postimg.cc/d0sYn2rq/PISO-9-1.png",
+      "https://i.postimg.cc/9fLjkDYc/QUINCHO-3.png",
     ]
   }
 ];
@@ -1184,6 +1229,16 @@ const ProjectsPage = () => {
                 layoutId={`image-${project.id}`}
                 className="w-full h-full transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1"
               />
+
+              {project.badge && (
+                <div className="absolute top-6 left-6 z-40 group-hover:opacity-0 transition-opacity duration-300">
+                  <div className="glass px-4 py-1.5 rounded-full border border-primary/30 shadow-lg flex items-center justify-center">
+                    <span className="text-primary text-[10px] font-black tracking-[0.2em] uppercase text-center">
+                      {project.badge}
+                    </span>
+                  </div>
+                </div>
+              )}
               
               <div className="absolute inset-0 bg-stone-950/60 opacity-0 group-hover:opacity-100 transition-all duration-700 backdrop-blur-[3px] z-20" />
               
@@ -1272,6 +1327,13 @@ const ProjectsPage = () => {
                   transition={{ delay: 0.3 }}
                 >
                   <span className="text-primary font-black uppercase tracking-[0.5em] text-[10px] mb-6 block">Proyecto en Detalle</span>
+                  {selectedProject?.badge && (
+                    <div className="mb-6">
+                      <span className="bg-primary/10 text-primary px-4 py-1.5 rounded-full text-[10px] font-black tracking-[0.2em] uppercase border border-primary/20 shadow-sm">
+                        {selectedProject.badge}
+                      </span>
+                    </div>
+                  )}
                   <h2 className="text-5xl md:text-8xl font-black tracking-tighter mb-4 text-stone-900">
                     {selectedProject?.title}
                   </h2>
