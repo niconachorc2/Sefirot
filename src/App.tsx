@@ -38,6 +38,7 @@ const Navbar = () => {
   const navLinks = [
     { name: 'Inicio', href: '/' },
     { name: 'Proyectos', href: '/proyectos' },
+    { name: 'Departamentos', href: '/departamentos' },
   ];
 
   return (
@@ -233,7 +234,7 @@ const Hero = () => {
         className="absolute inset-0 z-0"
       >
         <img 
-          src="https://i.postimg.cc/gjhXsn1Y/2_9J1547.jpg" 
+          src="https://i.postimg.cc/DyntvrTp/20221122-DJI-0135.jpg" 
           alt="Sefirot Background"
           className="w-full h-full object-cover opacity-40"
           referrerPolicy="no-referrer"
@@ -244,7 +245,7 @@ const Hero = () => {
         <div className="max-w-4xl">
           <div className="space-y-8">
             <div className="overflow-visible">
-              <h1 className="text-7xl md:text-[10rem] font-bold text-white leading-[0.9] tracking-tighter flex flex-col items-start">
+              <h1 className="flex flex-col items-start">
                 <motion.img
                   src="https://i.postimg.cc/T3MhddFc/Sefirot_Nuevo.png"
                   alt="Sefirot Logo"
@@ -314,6 +315,7 @@ interface ProjectCardProps {
   image: string;
   delay: number;
   badge?: string;
+  percentage?: string;
 }
 
 const RevealImage = ({ src, alt, className = "", delay = 0, layoutId }: { src: string, alt: string, className?: string, delay?: number, layoutId?: string }) => {
@@ -345,7 +347,7 @@ const RevealImage = ({ src, alt, className = "", delay = 0, layoutId }: { src: s
   );
 };
 
-const ProjectCard = ({ title, category, image, delay, badge }: ProjectCardProps) => {
+const ProjectCard = ({ title, category, image, delay, badge, percentage }: ProjectCardProps) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 100 }}
@@ -361,13 +363,22 @@ const ProjectCard = ({ title, category, image, delay, badge }: ProjectCardProps)
         className="w-full h-full transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1"
       />
 
-      {badge && (
-        <div className="absolute top-6 left-6 z-40 group-hover:opacity-0 transition-opacity duration-300">
-          <div className="glass px-4 py-1.5 rounded-full border border-primary/30 shadow-lg flex items-center justify-center">
-            <span className="text-primary text-[10px] font-black tracking-[0.2em] uppercase text-center">
-              {badge}
-            </span>
-          </div>
+      {(badge || percentage) && (
+        <div className="absolute top-6 left-6 z-40 group-hover:opacity-0 transition-opacity duration-300 flex gap-2">
+          {badge && (
+            <div className="bg-primary text-white px-4 py-1.5 rounded-full border border-primary/30 shadow-lg flex items-center justify-center">
+              <span className="font-black tracking-[0.2em] uppercase text-[10px] text-center">
+                {badge}
+              </span>
+            </div>
+          )}
+          {percentage && (
+            <div className="bg-primary text-white px-4 py-1.5 rounded-full border border-primary/30 shadow-lg flex items-center justify-center">
+              <span className="font-black tracking-[0.2em] uppercase text-[10px] text-center">
+                {percentage}
+              </span>
+            </div>
+          )}
         </div>
       )}
       
@@ -718,7 +729,7 @@ const About = () => {
           >
             <div className="aspect-[4/5] rounded-[2rem] overflow-hidden shadow-2xl relative">
               <ParallaxImage 
-                src="https://i.postimg.cc/ZqZqtwgL/DSC_8534.jpg" 
+                src="https://i.postimg.cc/ZnKCZ9Kd/DSC-8534.png" 
                 alt="Sefirot Entrance" 
                 className="w-full h-full grayscale hover:grayscale-0 transition-all duration-1000"
               />
@@ -979,10 +990,9 @@ const ProjectCarousel = () => {
                     <img 
                       src={item.url} 
                       alt={item.title} 
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500 ease-in-out"
+                      className="w-full h-full object-cover transition-all duration-500 ease-in-out"
                       referrerPolicy="no-referrer"
                     />
-                    <div className="absolute inset-0 bg-primary/50 mix-blend-multiply group-hover:opacity-0 transition-opacity duration-500 ease-in-out" />
                     <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-stone-900/40">
                       <span className="text-white font-black uppercase tracking-[0.2em] text-[9px] transform translate-y-4 group-hover:translate-y-0 transition-transform">Ver {item.id}</span>
                     </div>
@@ -994,6 +1004,212 @@ const ProjectCarousel = () => {
         </div>
       </div>
     </SectionWrapper>
+  );
+};
+
+const DepartmentsPage = () => {
+  const [filterBuilding, setFilterBuilding] = useState<string>('todos');
+  const [filterType, setFilterType] = useState<string>('todos');
+  const [filterStatus, setFilterStatus] = useState<string>('todos');
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const filteredDepartments = DEPARTMENTS_LIST.filter(dept => {
+    const matchBuilding = filterBuilding === 'todos' || dept.building.toString() === filterBuilding;
+    const matchType = filterType === 'todos' || dept.type === filterType;
+    const matchStatus = filterStatus === 'todos' || dept.status === filterStatus;
+    return matchBuilding && matchType && matchStatus;
+  });
+
+  const buildings = Array.from({ length: 9 }, (_, i) => (i + 1).toString());
+  const types = Array.from(new Set(DEPARTMENTS_LIST.map(d => d.type)));
+  const statuses = Array.from(new Set(DEPARTMENTS_LIST.map(d => d.status)));
+
+  return (
+    <main className="min-h-screen bg-stone-50 pt-40 pb-40 px-6">
+      <div className="max-w-7xl mx-auto">
+        <header className="mb-24 text-center">
+          <motion.span 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-primary font-black uppercase tracking-[0.5em] text-[10px] mb-6 block"
+          >
+            Busca tu hogar
+          </motion.span>
+          <RevealText className="text-6xl md:text-9xl font-bold tracking-tighter leading-tight text-stone-900 inline-block">
+            Nuestros <span className="italic font-light text-primary">Departamentos.</span>
+          </RevealText>
+        </header>
+
+        {/* Filters */}
+        <div className="mb-16 bg-white p-8 md:p-12 rounded-[3rem] shadow-xl border border-stone-100 flex flex-col md:flex-row gap-8 items-end">
+          <div className="flex-1 w-full space-y-4">
+            <label className="text-[10px] uppercase tracking-[0.4em] text-stone-400 font-black ml-2">Edificio Sefirot</label>
+            <div className="relative">
+              <select 
+                value={filterBuilding}
+                onChange={(e) => setFilterBuilding(e.target.value)}
+                className="w-full bg-stone-50 border-none rounded-2xl py-4 px-6 text-stone-900 font-bold appearance-none focus:ring-2 focus:ring-primary/20 outline-none cursor-pointer"
+              >
+                <option value="todos">Todos los Edificios</option>
+                {buildings.map(b => (
+                  <option key={b} value={b}>Sefirot {b}</option>
+                ))}
+              </select>
+              <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-stone-400">
+                <ChevronRight size={20} className="rotate-90" />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex-1 w-full space-y-4">
+            <label className="text-[10px] uppercase tracking-[0.4em] text-stone-400 font-black ml-2">Ambientes / Tipo</label>
+            <div className="relative">
+              <select 
+                value={filterType}
+                onChange={(e) => setFilterType(e.target.value)}
+                className="w-full bg-stone-50 border-none rounded-2xl py-4 px-6 text-stone-900 font-bold appearance-none focus:ring-2 focus:ring-primary/20 outline-none cursor-pointer"
+              >
+                <option value="todos">Todos los Tipos</option>
+                {types.map(t => (
+                  <option key={t} value={t}>{t}</option>
+                ))}
+              </select>
+              <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-stone-400">
+                <ChevronRight size={20} className="rotate-90" />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex-1 w-full space-y-4">
+            <label className="text-[10px] uppercase tracking-[0.4em] text-stone-400 font-black ml-2">Estado</label>
+            <div className="relative">
+              <select 
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+                className="w-full bg-stone-50 border-none rounded-2xl py-4 px-6 text-stone-900 font-bold appearance-none focus:ring-2 focus:ring-primary/20 outline-none cursor-pointer"
+              >
+                <option value="todos">Cualquier Estado</option>
+                {statuses.map(s => (
+                  <option key={s} value={s}>{s}</option>
+                ))}
+              </select>
+              <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-stone-400">
+                <ChevronRight size={20} className="rotate-90" />
+              </div>
+            </div>
+          </div>
+
+          <motion.button 
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            onClick={() => {
+              setFilterBuilding('todos');
+              setFilterType('todos');
+              setFilterStatus('todos');
+            }}
+            className="md:w-32 py-4 text-[10px] font-black uppercase tracking-widest text-stone-400 hover:text-primary transition-colors"
+          >
+            Limpiar
+          </motion.button>
+        </div>
+
+        {/* Results */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <AnimatePresence mode="popLayout">
+            {filteredDepartments.map((dept, idx) => (
+              <motion.div
+                key={dept.id}
+                layout
+                initial={{ opacity: 0, scale: 0.9, y: 30 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className="group bg-white rounded-[3rem] overflow-hidden shadow-xl border border-stone-100 flex flex-col h-full hover:shadow-2xl hover:border-primary/20 transition-all duration-500"
+              >
+                <div className="aspect-[16/10] overflow-hidden relative">
+                  <img 
+                    src={dept.image} 
+                    alt={dept.type} 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+                    referrerPolicy="no-referrer"
+                  />
+                  <div className="absolute top-6 left-6 z-10">
+                    <span className={`px-4 py-1.5 rounded-full text-[10px] font-black tracking-[0.2em] uppercase shadow-lg border backdrop-blur-md ${
+                      dept.status === 'Disponible' 
+                        ? 'bg-green-500/20 text-green-600 border-green-500/30' 
+                        : dept.status === 'Reservado'
+                        ? 'bg-amber-500/20 text-amber-600 border-amber-500/30'
+                        : 'bg-stone-500/20 text-stone-600 border-stone-500/30'
+                    }`}>
+                      {dept.status}
+                    </span>
+                  </div>
+                  <div className="absolute bottom-6 right-6 z-10">
+                    <div className="bg-stone-900/40 backdrop-blur-md border border-white/20 text-white px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase">
+                      Sefirot {dept.building}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-10 flex flex-col flex-1">
+                  <div className="flex justify-between items-start mb-6">
+                    <div>
+                      <h3 className="text-3xl font-bold tracking-tighter text-stone-900 mb-1">
+                        Piso {dept.floor}
+                        <span className="text-primary italic opacity-60 ml-2">Depto {dept.unit}</span>
+                      </h3>
+                      <p className="text-stone-400 font-bold uppercase tracking-[0.3em] text-[10px]">{dept.type}</p>
+                    </div>
+                    <div className="text-right">
+                      <span className="block text-2xl font-black text-stone-900 tracking-tighter">{dept.area}</span>
+                      <span className="text-[10px] font-black uppercase text-stone-400 tracking-widest">Sup. Total</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-auto space-y-6">
+                    <div className="h-px bg-stone-100 w-full" />
+                    <div className="flex items-center gap-6">
+                      <MagneticButton className="flex-1">
+                        <a 
+                          href={`https://api.whatsapp.com/send?phone=5493416910558&text=Hola!%20Me%20interesa%20el%20depto%20${dept.floor}${dept.unit}%20en%20Sefirot%20${dept.building}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="w-full bg-stone-950 text-white py-5 rounded-2xl font-black uppercase tracking-[0.3em] text-[10px] text-center block hover:bg-primary transition-colors"
+                        >
+                          Consultar
+                        </a>
+                      </MagneticButton>
+                      <button className="w-16 h-16 rounded-2xl bg-stone-50 border border-stone-100 flex items-center justify-center text-stone-400 hover:text-primary hover:border-primary/30 transition-all group">
+                        <ArrowUpRight size={20} className="group-hover:rotate-45 transition-transform" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+          
+          {filteredDepartments.length === 0 && (
+            <div className="col-span-full py-32 text-center">
+              <p className="text-stone-400 text-xl font-light italic">No se encontraron departamentos con los filtros seleccionados.</p>
+              <button 
+                onClick={() => {
+                  setFilterBuilding('todos');
+                  setFilterType('todos');
+                  setFilterStatus('todos');
+                }}
+                className="mt-6 text-primary font-black uppercase tracking-widest text-[10px] border-b-2 border-primary/20 hover:border-primary transition-all"
+              >
+                Restablecer Búsqueda
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
+    </main>
   );
 };
 
@@ -1029,6 +1245,38 @@ const CIRCULAR_PROJECT_IMAGES = [
 ];
 
 /**
+ * CONFIGURACIÓN DE DEPARTAMENTOS
+ * Unidades disponibles para filtrar.
+ */
+const DEPARTMENTS_LIST = [
+  // Sefirot 9 (En Venta / Próximamente)
+  { id: 901, building: 9, floor: '2', unit: 'A', type: '1 Dormitorio', area: '52m²', status: 'Disponible', image: 'https://i.postimg.cc/fbzN5cmM/FACHADA-2.png' },
+  { id: 902, building: 9, floor: '3', unit: 'B', type: 'Monoambiente', area: '38m²', status: 'Disponible', image: 'https://i.postimg.cc/R0gzYWLr/HALL-INGRESO-2.png' },
+  { id: 903, building: 9, floor: '4', unit: 'C', type: '2 Dormitorios', area: '75m²', status: 'Reservado', image: 'https://i.postimg.cc/d0sYn2rq/PISO-9-1.png' },
+  
+  // Sefirot 8
+  { id: 801, building: 8, floor: '1', unit: 'A', type: '2 Dormitorios', area: '82m²', status: 'Disponible', image: 'https://i.postimg.cc/5092Ycn9/SEF8-EXTERIOR-URBANA-02.jpg' },
+  { id: 802, building: 8, floor: '2', unit: 'B', type: '1 Dormitorio', area: '48m²', status: 'Disponible', image: 'https://i.postimg.cc/nLGLhVYJ/SEF8-EXTERIOR-CONTRAFRENTE-01.jpg' },
+  
+  // Sefirot 7
+  { id: 701, building: 7, floor: 'PB', unit: 'A', type: 'Local Comercial', area: '110m²', status: 'Disponible', image: 'https://i.postimg.cc/brHg6tQX/FACHADA.png' },
+  { id: 702, building: 7, floor: '5', unit: 'C', type: '1 Dormitorio', area: '50m²', status: 'Vendido', image: 'https://i.postimg.cc/6q0VVNXp/IMG-20250530-WA0056.jpg' },
+  
+  // Sefirot 6
+  { id: 601, building: 6, floor: '1', unit: 'A', type: '1 Dormitorio', area: '45m²', status: 'Vendido', image: 'https://i.postimg.cc/h47HLy6x/DJI-0024.jpg' },
+  { id: 602, building: 6, floor: '8', unit: 'B', type: '2 Dormitorios', area: '78m²', status: 'Vendido', image: 'https://i.postimg.cc/v86prqkW/DJI-0022.jpg' },
+
+  // Sefirot 5
+  { id: 501, building: 5, floor: '2', unit: 'A', type: 'Monoambiente', area: '34m²', status: 'Vendido', image: 'https://i.postimg.cc/j5SFnvfG/Frente-1.jpg' },
+  
+  // Genéricos para rellenar los 9 edificios
+  { id: 401, building: 4, floor: '3', unit: 'A', type: '2 Dormitorios', area: '80m²', status: 'Vendido', image: 'https://i.postimg.cc/6q5t3d6v/DSC-4656vale.jpg' },
+  { id: 301, building: 3, floor: '4', unit: 'B', type: '1 Dormitorio', area: '50m²', status: 'Vendido', image: 'https://i.postimg.cc/mrt9cHkD/03.jpg' },
+  { id: 201, building: 2, floor: '6', unit: 'A', type: '1 Dormitorio', area: '55m²', status: 'Vendido', image: 'https://i.postimg.cc/qM32wnXS/DSC-9195.jpg' },
+  { id: 101, building: 1, floor: 'PB', unit: 'A', type: 'Local Comercial', area: '95m²', status: 'Vendido', image: 'https://i.postimg.cc/pXWtYYHV/2-P2604.jpg' },
+];
+
+/**
  * CONFIGURACIÓN DE PROYECTOS
  * Aquí puedes cambiar las imágenes y textos de los 9 proyectos de la página "Proyectos".
  * mainImage: Imagen de la tarjeta principal.
@@ -1047,6 +1295,11 @@ const PROJECTS_LIST = [
       "https://i.postimg.cc/tCqHttjC/01.jpg",
       "https://i.postimg.cc/xTfSyy21/3-P2604.jpg",
       "https://i.postimg.cc/ZKbhFFSp/DSC-0557.jpg",
+      "https://i.postimg.cc/qM32wnXS/DSC-9195.jpg",
+      "https://i.postimg.cc/CKXqbxn1/06.jpg",
+      "https://i.postimg.cc/zBhR7YTh/DSC-2506.jpg",
+      "https://i.postimg.cc/C18f7pbb/DSC-2564.jpg",
+      "https://i.postimg.cc/zf6gTGHC/DSC-2602.jpg",
     ]
   },
   {
@@ -1139,6 +1392,7 @@ const PROJECTS_LIST = [
     address: "RODRIGUEZ 1680",
     category: "Desarrollo Inmobiliario",
     badge: "PROXIMAMENTE",
+    percentage: "80%",
     mainImage: "https://i.postimg.cc/5092Ycn9/SEF8-EXTERIOR-URBANA-02.jpg",
     description: "Exclusividad y diseño de autor. A pasos de los principales parques de la ciudad, SEF 8 propone una arquitectura abierta y luminosa. Cada unidad refleja nuestro compromiso con las terminaciones de lujo y la optimización de los espacios comunes.",
     gallery: [
@@ -1154,6 +1408,7 @@ const PROJECTS_LIST = [
     address: "MONTEVIDEO 1876",
     category: "Desarrollo Inmobiliario",
     badge: "PROXIMAMENTE",
+    percentage: "45%",
     mainImage: "https://i.postimg.cc/8CZVY7Bq/QUINCHO-2.png",
     description: "Tu refugio en el centro de Rosario. Una propuesta que prioriza la intimidad y el confort. Con una ubicación estratégica cerca de facultades y centros comerciales, este edificio equilibra la funcionalidad con el sello estético característico de Sefirot.",
     gallery: [
@@ -1230,15 +1485,34 @@ const ProjectsPage = () => {
                 className="w-full h-full transition-all duration-1000 group-hover:scale-110 group-hover:rotate-1"
               />
 
-              {project.badge && (
-                <div className="absolute top-6 left-6 z-40 group-hover:opacity-0 transition-opacity duration-300">
-                  <div className="glass px-4 py-1.5 rounded-full border border-primary/30 shadow-lg flex items-center justify-center">
-                    <span className="text-primary text-[10px] font-black tracking-[0.2em] uppercase text-center">
-                      {project.badge}
-                    </span>
-                  </div>
+              {(project.badge || project.percentage) && (
+                <div className="absolute top-6 left-6 z-40 group-hover:opacity-0 transition-opacity duration-300 flex gap-2">
+                  {project.badge && (
+                    <div className="bg-primary text-white px-4 py-1.5 rounded-full border border-primary/30 shadow-lg flex items-center justify-center">
+                      <span className="font-black tracking-[0.2em] uppercase text-[10px] text-center">
+                        {project.badge}
+                      </span>
+                    </div>
+                  )}
+                  {project.percentage && (
+                    <div className="bg-primary text-white px-4 py-1.5 rounded-full border border-primary/30 shadow-lg flex items-center justify-center">
+                      <span className="font-black tracking-[0.2em] uppercase text-[10px] text-center">
+                        {project.percentage}
+                      </span>
+                    </div>
+                  )}
                 </div>
               )}
+
+              {/* Number Circle - Bottom Right */}
+              <div className="absolute bottom-6 right-6 z-10 w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-white/50 overflow-hidden shadow-2xl group-hover:opacity-0 transition-opacity duration-300 bg-white/20 backdrop-blur-sm">
+                <img 
+                  src={CIRCULAR_PROJECT_IMAGES.find(img => img.id === project.id)?.url} 
+                  alt={`Sefirot ${project.id}`}
+                  className="w-full h-full object-contain"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
               
               <div className="absolute inset-0 bg-stone-950/60 opacity-0 group-hover:opacity-100 transition-all duration-700 backdrop-blur-[3px] z-20" />
               
@@ -1411,6 +1685,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/proyectos" element={<ProjectsPage />} />
+          <Route path="/departamentos" element={<DepartmentsPage />} />
         </Routes>
         <Footer />
       </div>
