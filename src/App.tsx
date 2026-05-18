@@ -1408,7 +1408,7 @@ const PROJECTS_LIST = [
     address: "MONTEVIDEO 1876",
     category: "Desarrollo Inmobiliario",
     badge: "PROXIMAMENTE",
-    percentage: "45%",
+    percentage: "5%",
     mainImage: "https://i.postimg.cc/8CZVY7Bq/QUINCHO-2.png",
     description: "Tu refugio en el centro de Rosario. Una propuesta que prioriza la intimidad y el confort. Con una ubicación estratégica cerca de facultades y centros comerciales, este edificio equilibra la funcionalidad con el sello estético característico de Sefirot.",
     gallery: [
