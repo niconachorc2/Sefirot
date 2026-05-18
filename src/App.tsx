@@ -1349,7 +1349,7 @@ const PROJECTS_LIST = [
     title: "Sefirot 5",
     address: "PELLEGRINI 2618",
     category: "Desarrollo Inmobiliario",
-    mainImage: "https://i.postimg.cc/j5SFnvfG/Frente-1.jpg",
+    mainImage: "https://i.postimg.cc/8kyQnBbG/Generated-Image-May-18-2026-9-51AM.png",
     description: "Vida urbana con vistas inmejorables. Ubicado sobre una de las arterias más importantes de Rosario, SEF 5 ofrece una conexión directa con la recreación y los servicios. Arquitectura de alta gama con un enfoque en la durabilidad y el estilo de vida cosmopolita.",
     gallery: [
       "https://i.postimg.cc/Qtfvfvs5/Azotea-2.jpg",
@@ -1363,7 +1363,7 @@ const PROJECTS_LIST = [
     title: "Sefirot 6",
     address: "OV LAGOS 1141",
     category: "Desarrollo Inmobiliario",
-    mainImage: "https://i.postimg.cc/h47HLy6x/DJI-0024.jpg",
+    mainImage: "https://i.postimg.cc/FF254FwC/FACHADA.jpg",
     description: "Innovación en cada metro cuadrado. Un proyecto que destaca por su geometría limpia y soluciones espaciales inteligentes. SEF 6 es la opción ideal para inversores y residentes que buscan una ubicación dinámica con un estándar de construcción superior.",
     gallery: [
       "https://i.postimg.cc/v86prqkW/DJI-0022.jpg",
