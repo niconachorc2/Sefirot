@@ -407,8 +407,8 @@ const ProjectCard = ({ title, category, image, delay, badge, percentage }: Proje
 
 const Projects = () => {
   const projects = [
-    { title: "las mejores vistas", category: "Rooftop", image: "https://i.postimg.cc/zBsM6c2v/DSC_2602.jpg", delay: 0.1 },
-    { title: "Ubicaciones", category: "Residencial", image: "https://i.postimg.cc/1tkT2j79/2_P2604.jpg", delay: 0.2 },
+    { title: "las mejores vistas", category: "Rooftop", image: "https://i.postimg.cc/BQSGcc0v/1-P2604.jpg", delay: 0.1 },
+    { title: "Ubicaciones", category: "Residencial", image: "https://i.postimg.cc/cLMLsHyR/Generated-Image-May-17-2026-9-09PM.png", delay: 0.2 },
     { title: "Interiores Premium", category: "Diseño", image: "https://i.postimg.cc/KzCSFzj3/Interior_piso_2.jpg", delay: 0.3 },
     { title: "Experiencia", category: "Corporativo", image: "https://i.postimg.cc/50CKBm92/3_P2604.jpg", delay: 0.4 },
   ];
@@ -1288,7 +1288,7 @@ const PROJECTS_LIST = [
     title: "Sefirot 1",
     address: "RODRIGUEZ 1694",
     category: "Desarrollo Inmobiliario",
-    mainImage: "https://i.postimg.cc/pXWtYYHV/2-P2604.jpg",
+    mainImage: "https://i.postimg.cc/cLMLsHyR/Generated-Image-May-17-2026-9-09PM.png",
     description: "Donde el diseño se encuentra con la armonía. Ubicado en una esquina privilegiada, este proyecto destaca por su aprovechamiento integral de la luz y una arquitectura que dialoga con el entorno residencial. Ideal para quienes buscan tranquilidad sin alejarse del pulso urbano.",
     gallery: [
       "https://i.postimg.cc/BQSGcc0v/1-P2604.jpg",
@@ -1321,7 +1321,7 @@ const PROJECTS_LIST = [
     title: "Sefirot 3",
     address: "MARTIN RODRIGUEZ 1665",
     category: "Desarrollo Inmobiliario",
-    mainImage: "https://i.postimg.cc/mrt9cHkD/03.jpg",
+    mainImage: "https://i.postimg.cc/T1VrjD4T/Generated-Image-May-17-2026-9-42PM.png",
     description: "Sofisticación y confort térmico. Este edificio redefine la experiencia de vivir en el centro-norte. Con una estética vanguardista y materiales de alta calidad, SEF 3 ofrece ambientes amplios diseñados para maximizar la entrada de aire y luz natural.",
     gallery: [
       "https://i.postimg.cc/CKXqbxn1/06.jpg",
