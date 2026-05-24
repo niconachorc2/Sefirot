@@ -1283,30 +1283,30 @@ const CIRCULAR_PROJECT_IMAGES = [
  */
 const DEPARTMENTS_LIST = [
   // Sefirot 9 (Disponibles para Venta)
-  { id: 912, building: 9, floor: '1', unit: '02', type: '1 Dormitorio', area: '52m²', status: 'Disponible', image: 'https://i.postimg.cc/fbzN5cmM/FACHADA-2.png' },
+  { id: 912, building: 9, floor: '1', unit: '02', type: '1 Dormitorio', area: '52m²', status: 'Disponible', image: 'https://i.postimg.cc/bNj0ZSgh/LIVING-COMEDOR-PISO-01-2.png' },
   { id: 913, building: 9, floor: '1', unit: '03', type: 'Monoambiente', area: '38m²', status: 'Disponible', image: 'https://i.postimg.cc/R0gzYWLr/HALL-INGRESO-2.png' },
-  { id: 922, building: 9, floor: '2', unit: '02', type: '1 Dormitorio', area: '52m²', status: 'Disponible', image: 'https://i.postimg.cc/d0sYn2rq/PISO-9-1.png' },
+  { id: 922, building: 9, floor: '2', unit: '02', type: '1 Dormitorio', area: '52m²', status: 'Disponible', image: 'https://i.postimg.cc/fTh7VSCQ/PISO-4-DORMITORIO.png' },
   { id: 923, building: 9, floor: '2', unit: '03', type: 'Monoambiente', area: '38m²', status: 'Disponible', image: 'https://i.postimg.cc/8CZVY7Bq/QUINCHO-2.png' },
-  { id: 931, building: 9, floor: '3', unit: '01', type: '2 Dormitorios', area: '75m²', status: 'Disponible', image: 'https://i.postimg.cc/fbzN5cmM/FACHADA-2.png' },
-  { id: 933, building: 9, floor: '3', unit: '03', type: 'Monoambiente', area: '38m²', status: 'Disponible', image: 'https://i.postimg.cc/R0gzYWLr/HALL-INGRESO-2.png' },
-  { id: 952, building: 9, floor: '5', unit: '02', type: '1 Dormitorio', area: '52m²', status: 'Disponible', image: 'https://i.postimg.cc/d0sYn2rq/PISO-9-1.png' },
-  { id: 981, building: 9, floor: '8', unit: '01', type: '2 Dormitorios', area: '75m²', status: 'Disponible', image: 'https://i.postimg.cc/8CZVY7Bq/QUINCHO-2.png' },
+  { id: 931, building: 9, floor: '3', unit: '01', type: '2 Dormitorios', area: '75m²', status: 'Disponible', image: 'https://i.postimg.cc/8PVd7f4V/PISO-04.png' },
+  { id: 933, building: 9, floor: '3', unit: '03', type: 'Monoambiente', area: '38m²', status: 'Disponible', image: 'https://i.postimg.cc/Wb6GgpYR/QUINCHO-1.png' },
+  { id: 952, building: 9, floor: '5', unit: '02', type: '1 Dormitorio', area: '52m²', status: 'Disponible', image: 'https://i.postimg.cc/VLc9J0gY/PISO-9.png' },
+  { id: 981, building: 9, floor: '8', unit: '01', type: '2 Dormitorios', area: '75m²', status: 'Disponible', image: 'https://i.postimg.cc/BQG5jPp9/PISO-9-2.png' },
   { id: 982, building: 9, floor: '8', unit: '02', type: '1 Dormitorio', area: '52m²', status: 'Disponible', image: 'https://i.postimg.cc/fbzN5cmM/FACHADA-2.png' },
   
   // Sefirot 8 (Disponibles para Venta)
-  { id: 841, building: 8, floor: '4', unit: '01', type: '1 Dormitorio', area: '48m²', status: 'Disponible', image: 'https://i.postimg.cc/5092Ycn9/SEF8-EXTERIOR-URBANA-02.jpg' },
-  { id: 851, building: 8, floor: '5', unit: '01', type: '1 Dormitorio', area: '48m²', status: 'Disponible', image: 'https://i.postimg.cc/nLGLhVYJ/SEF8-EXTERIOR-CONTRAFRENTE-01.jpg' },
+  { id: 841, building: 8, floor: '4', unit: '01', type: '1 Dormitorio', area: '48m²', status: 'Disponible', image: 'https://i.postimg.cc/J0XQ9bQk/PISO-4MONO-copia.png' },
+  { id: 851, building: 8, floor: '5', unit: '01', type: '1 Dormitorio', area: '48m²', status: 'Disponible', image: 'https://i.postimg.cc/D0GctqcW/SEF8-P9-1-DORMITORIO.jpg' },
   { id: 861, building: 8, floor: '6', unit: '01', type: '1 Dormitorio', area: '48m²', status: 'Disponible', image: 'https://i.postimg.cc/LX48YdNn/SEF8-EXTERIOR-P3-BALCON-OFICINA.jpg' },
-  { id: 871, building: 8, floor: '7', unit: '01', type: '2 Dormitorios', area: '82m²', status: 'Disponible', image: 'https://i.postimg.cc/5092Ycn9/SEF8-EXTERIOR-URBANA-02.jpg' },
+  { id: 871, building: 8, floor: '7', unit: '01', type: '2 Dormitorios', area: '82m²', status: 'Disponible', image: 'https://i.postimg.cc/C584Wj4s/PISO-6-2-DORM.png' },
   { id: 881, building: 8, floor: '8', unit: '01', type: '2 Dormitorios', area: '82m²', status: 'Disponible', image: 'https://i.postimg.cc/nLGLhVYJ/SEF8-EXTERIOR-CONTRAFRENTE-01.jpg' },
   
   // Sefirot 7 (Disponibles para Venta)
-  { id: 711, building: 7, floor: '1', unit: '01', type: '1 Dormitorio', area: '50m²', status: 'Disponible', image: 'https://i.postimg.cc/brHg6tQX/FACHADA.png' },
-  { id: 712, building: 7, floor: '1', unit: '02', type: '2 Dormitorios', area: '76m²', status: 'Disponible', image: 'https://i.postimg.cc/6q0VVNXp/IMG-20250530-WA0056.jpg' },
-  { id: 733, building: 7, floor: '3', unit: '03', type: 'Monoambiente', area: '36m²', status: 'Disponible', image: 'https://i.postimg.cc/brHg6tQX/FACHADA.png' },
-  { id: 762, building: 7, floor: '6', unit: '02', type: '1 Dormitorio', area: '50m²', status: 'Disponible', image: 'https://i.postimg.cc/6q0VVNXp/IMG-20250530-WA0056.jpg' },
-  { id: 791, building: 7, floor: '9', unit: '01', type: '2 Dormitorios', area: '76m²', status: 'Disponible', image: 'https://i.postimg.cc/brHg6tQX/FACHADA.png' },
-  { id: 7101, building: 7, floor: '10', unit: '01', type: 'Semipiso Premium', area: '112m²', status: 'Disponible', image: 'https://i.postimg.cc/6q0VVNXp/IMG-20250530-WA0056.jpg' },
+  { id: 711, building: 7, floor: '1', unit: '01', type: '1 Dormitorio', area: '50m²', status: 'Disponible', image: 'https://i.postimg.cc/Mp3zFRrk/HALL-INGRESO.jpg' },
+  { id: 712, building: 7, floor: '1', unit: '02', type: '2 Dormitorios', area: '76m²', status: 'Disponible', image: 'https://i.postimg.cc/0N69RQLS/QUINCHO-2.jpg' },
+  { id: 733, building: 7, floor: '3', unit: '03', type: 'Monoambiente', area: '36m²', status: 'Disponible', image: 'https://i.postimg.cc/QdnbnsWt/IMG-20250530-WA0122.jpg' },
+  { id: 762, building: 7, floor: '6', unit: '02', type: '1 Dormitorio', area: '50m²', status: 'Disponible', image: 'https://i.postimg.cc/gks483zR/IMG-20250530-WA0084.jpg' },
+  { id: 791, building: 7, floor: '9', unit: '01', type: '2 Dormitorios', area: '76m²', status: 'Disponible', image: 'https://i.postimg.cc/FK2N9v4c/PILETA.png' },
+  { id: 7101, building: 7, floor: '10', unit: '01', type: 'Semipiso Premium', area: '112m²', status: 'Disponible', image: 'https://i.postimg.cc/GpZdcRCp/Whats-App-Image-2026-04-22-at-15-11-49.jpg' },
 ];
 
 /**
@@ -1340,13 +1340,13 @@ const PROJECTS_LIST = [
     title: "Sefirot 2",
     address: "9 DE JULIO 1547",
     category: "Desarrollo Inmobiliario",
-    mainImage: "https://i.postimg.cc/qM32wnXS/DSC-9195.jpg",
+    mainImage: "https://i.postimg.cc/3Jkrzb7k/Generated-Image-May-24-2026-5-59PM.png",
     description: "Modernidad en el corazón de la ciudad. Una propuesta pensada para el ritmo de vida actual. Espacios funcionales con terminaciones premium, situados en un punto estratégico que conecta la comodidad del centro con la calidez de un barrio tradicional.",
     gallery: [
-      "https://picsum.photos/seed/sefirot-main-2/1200/800",
-      "https://picsum.photos/seed/sef-gal-2-2/800/600",
-      "https://picsum.photos/seed/sef-gal-2-3/800/600",
-      "https://picsum.photos/seed/sef-gal-2-4/800/600",
+      "https://i.postimg.cc/jSXnMv50/1-9J1547.jpg",
+      "https://i.postimg.cc/mgw1mVDW/4-9J1547.jpg",
+      "https://i.postimg.cc/13HVvMts/DSC-9156.jpg",
+      "https://i.postimg.cc/t45nBDTq/DSC-9189.jpg",
     ]
   },
   {
@@ -1361,6 +1361,8 @@ const PROJECTS_LIST = [
       "https://i.postimg.cc/zBhR7YTh/DSC-2506.jpg",
       "https://i.postimg.cc/C18f7pbb/DSC-2564.jpg",
       "https://i.postimg.cc/zf6gTGHC/DSC-2602.jpg",
+      "https://i.postimg.cc/x8McM37p/05.jpg",
+      "https://i.postimg.cc/vBp44NPV/20200709-115824.jpg",
     ]
   },
   {
@@ -1375,6 +1377,13 @@ const PROJECTS_LIST = [
       "https://i.postimg.cc/j5hRt8T5/8.jpg",
       "https://i.postimg.cc/MHKqTyZR/DSC-4667.jpg",
       "https://i.postimg.cc/zvX8BnDD/IMG-20200524-WA0018.jpg",
+      "https://i.postimg.cc/QxZBsvKZ/5-M2517.jpg",
+      "https://i.postimg.cc/hPRJgNQQ/IMG-20200524-WA0035.jpg",
+      "https://i.postimg.cc/ncfsZN9z/IMG-20200524-WA0019.jpg",
+      "https://i.postimg.cc/7YrCDjJ4/9-M2517.jpg",
+      "https://i.postimg.cc/hPRJgNQB/3-M2517.jpg",
+      "https://i.postimg.cc/28NqmgLf/3.jpg",
+      "https://i.postimg.cc/yYCJB236/20221122-DJI-0129.jpg",
     ]
   },
   {
@@ -1389,6 +1398,12 @@ const PROJECTS_LIST = [
       "https://i.postimg.cc/3JsVfXMP/Ingreso-1.jpg",
       "https://i.postimg.cc/cJmzJPK0/Interior-piso-2.jpg",
       "https://i.postimg.cc/NFWJVcn8/6.jpg",
+      "https://i.postimg.cc/QxNSdWSW/Generated-Image-May-24-2026-6-58PM.png",
+      "https://i.postimg.cc/qRnk5MLG/5.jpg",
+      "https://i.postimg.cc/d1dqxtB2/3.jpg",
+      "https://i.postimg.cc/3RpKcJBB/Azotea-1.jpg",
+      "https://i.postimg.cc/rmW8PFJr/2.jpg",
+      "https://i.postimg.cc/fLXwrTKx/Ingreso-2.jpg",
     ]
   },
   {
@@ -1396,13 +1411,23 @@ const PROJECTS_LIST = [
     title: "Sefirot 6",
     address: "OV LAGOS 1141",
     category: "Desarrollo Inmobiliario",
-    mainImage: "https://i.postimg.cc/FF254FwC/FACHADA.jpg",
+    mainImage: "https://i.postimg.cc/nrYWWxzy/Generated-Image-May-24-2026-6-05PM.png",
     description: "Innovación en cada metro cuadrado. Un proyecto que destaca por su geometría limpia y soluciones espaciales inteligentes. SEF 6 es la opción ideal para inversores y residentes que buscan una ubicación dinámica con un estándar de construcción superior.",
     gallery: [
       "https://i.postimg.cc/v86prqkW/DJI-0022.jpg",
       "https://i.postimg.cc/2jBPQcMW/DJI-0025.jpg",
       "https://i.postimg.cc/Pf8BW39Y/DJI-0033.jpg",
       "https://i.postimg.cc/YqKTbNBJ/MG-3652-HDR.jpg",
+      "https://i.postimg.cc/D0GNZsRs/MG-3664-HDR.jpg",
+      "https://i.postimg.cc/J0XFnJST/MG-3670-HDR.jpg",
+      "https://i.postimg.cc/GmCW47L7/MG-3628-HDR.jpg",
+      "https://i.postimg.cc/s2nq03pH/MG-3643-HDR.jpg",
+      "https://i.postimg.cc/438qFXzz/MG-3637-HDR.jpg",
+      "https://i.postimg.cc/ZqYXcWyR/MG-3634-HDR.jpg",
+      "https://i.postimg.cc/sftdrfbY/MG-3181-HDR.jpg",
+      "https://i.postimg.cc/GhG0hwCy/MG-3613-HDR.jpg",
+      "https://i.postimg.cc/xjWD2jB4/MG-3609.jpg",
+      "https://i.postimg.cc/mZ0fsZKV/MG-3622-HDR.jpg",
     ]
   },
   {
@@ -1410,13 +1435,23 @@ const PROJECTS_LIST = [
     title: "Sefirot 7",
     address: "OV LAGOS 1261",
     category: "Desarrollo Inmobiliario",
-    mainImage: "https://i.postimg.cc/brHg6tQX/FACHADA.png",
+    mainImage: "https://i.postimg.cc/brHg6tQX/678.png",
     description: "El estándar de calidad que estabas buscando. Continuando con nuestra línea de excelencia sobre Av. Ovidio Lagos, este edificio se centra en la amplitud de sus ambientes and la selección de materiales nobles, garantizando una inversión segura y una habitabilidad excepcional.",
     gallery: [
-      "https://i.postimg.cc/cCMhDnfk/FACHADA-2.jpg",
       "https://i.postimg.cc/gks483zR/IMG-20250530-WA0084.jpg",
       "https://i.postimg.cc/QdnbnsWt/IMG-20250530-WA0122.jpg",
       "https://i.postimg.cc/6q0VVNXp/IMG-20250530-WA0056.jpg",
+      "https://i.postimg.cc/7ZtqW7tp/FACHADA.jpg",
+      "https://i.postimg.cc/6Q7BJ3FP/FACHADA.jpg",
+      "https://i.postimg.cc/Mp3zFRrk/HALL-INGRESO.jpg",
+      "https://i.postimg.cc/5tZbxJVQ/HALL-INGRESO.png",
+      "https://i.postimg.cc/QMBjGtRr/HALL-INGRESO-2.png",
+      "https://i.postimg.cc/FK2N9v4c/PILETA.png",
+      "https://i.postimg.cc/0N69RQLS/QUINCHO-2.jpg",
+      "https://i.postimg.cc/GpZdcRCp/Whats-App-Image-2026-04-22-at-15-11-49.jpg",
+      "https://i.postimg.cc/k5V734k6/Whats-App-Image-2026-04-22-at-15-11-49-(1).jpg",
+      "https://i.postimg.cc/Dztn2hTW/Whats-App-Image-2026-04-22-at-15-11-50.jpg",
+      "https://i.postimg.cc/TPZfRx6L/Whats-App-Image-2026-04-22-at-15-11-50-(1).jpg",
     ]
   },
   {
@@ -1426,13 +1461,19 @@ const PROJECTS_LIST = [
     category: "Desarrollo Inmobiliario",
     badge: "PROXIMAMENTE",
     percentage: "80%",
-    mainImage: "https://i.postimg.cc/5092Ycn9/SEF8-EXTERIOR-URBANA-02.jpg",
+    mainImage: "https://i.postimg.cc/HLFsYw2L/Generated-Image-May-24-2026-6-07PM.png",
     description: "Exclusividad y diseño de autor. A pasos de los principales parques de la ciudad, SEF 8 propone una arquitectura abierta y luminosa. Cada unidad refleja nuestro compromiso con las terminaciones de lujo y la optimización de los espacios comunes.",
     gallery: [
       "https://i.postimg.cc/nLGLhVYJ/SEF8-EXTERIOR-CONTRAFRENTE-01.jpg",
       "https://i.postimg.cc/wvxjyK09/SEF8-EXTERIOR-INGRESO-PB-01.jpg",
       "https://i.postimg.cc/HL9LkW4W/SEF8-EXTERIOR-INGRESO-PB-02.jpg",
       "https://i.postimg.cc/LX48YdNn/SEF8-EXTERIOR-P3-BALCON-OFICINA.jpg",
+      "https://i.postimg.cc/J0XQ9bQk/PISO-4MONO-copia.png",
+      "https://i.postimg.cc/C584Wj4s/PISO-6-2-DORM.png",
+      "https://i.postimg.cc/3NGZPgZR/SEF8-INTERIOR-COCHERAS-01.jpg",
+      "https://i.postimg.cc/tTw5SrFW/SEF8-INTERIOR-COCHERAS-02.jpg",
+      "https://i.postimg.cc/xChRxsLb/SEF8-INTERIOR-OFICINA-01.jpg",
+      "https://i.postimg.cc/D0GctqcW/SEF8-P9-1-DORMITORIO.jpg",
     ]
   },
   {
@@ -1449,6 +1490,13 @@ const PROJECTS_LIST = [
       "https://i.postimg.cc/R0gzYWLr/HALL-INGRESO-2.png",
       "https://i.postimg.cc/d0sYn2rq/PISO-9-1.png",
       "https://i.postimg.cc/9fLjkDYc/QUINCHO-3.png",
+      "https://i.postimg.cc/bNj0ZSgh/LIVING-COMEDOR-PISO-01-2.png",
+      "https://i.postimg.cc/8PVd7f4V/PISO-04.png",
+      "https://i.postimg.cc/fTh7VSCQ/PISO-4-DORMITORIO.png",
+      "https://i.postimg.cc/VLc9J0gY/PISO-9.png",
+      "https://i.postimg.cc/BQG5jPp9/PISO-9-2.png",
+      "https://i.postimg.cc/Wb6GgpYR/QUINCHO-1.png",
+      "https://i.postimg.cc/kXFQKMY3/QUINCHO-3.png",
     ]
   }
 ];
