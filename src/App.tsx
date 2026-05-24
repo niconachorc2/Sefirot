@@ -55,22 +55,40 @@ const Navbar = () => {
         </motion.div>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link, i) => (
-            <motion.div
-              key={link.name}
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-            >
-              <Link
-                to={link.href}
-                className={`text-[10px] font-black hover:text-primary transition-colors uppercase tracking-[0.3em] ${scrolled || !isHomePage ? 'text-stone-900' : 'text-white'}`}
+        <div className="hidden md:flex items-center gap-4">
+          {navLinks.map((link, i) => {
+            const isActive = location.pathname === link.href;
+            const isScrolledOrNotHome = scrolled || !isHomePage;
+            
+            let glassClass = "";
+            if (isScrolledOrNotHome) {
+              glassClass = isActive
+                ? "bg-primary text-white border-primary shadow-lg shadow-primary/10"
+                : "bg-stone-900/5 hover:bg-stone-900/10 text-stone-900 border-stone-950/10 hover:border-stone-950/20";
+            } else {
+              glassClass = isActive
+                ? "bg-primary text-white border-primary shadow-lg shadow-primary/20"
+                : "bg-white/10 hover:bg-white/20 text-white border-white/10 hover:border-white/20 backdrop-blur-md";
+            }
+
+            return (
+              <motion.div
+                key={link.name}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
               >
-                {link.name}
-              </Link>
-            </motion.div>
-          ))}
+                <MagneticButton>
+                  <Link
+                    to={link.href}
+                    className={`px-6 py-3 rounded-full text-[10px] font-black uppercase tracking-[0.3em] block transition-all duration-300 border ${glassClass}`}
+                  >
+                    {link.name}
+                  </Link>
+                </MagneticButton>
+              </motion.div>
+            );
+          })}
           <MagneticButton>
             <motion.a
               href="https://api.whatsapp.com/send?phone=5493416910558&text=Hola!%20Me%20comunico%20desde%20la%20web!"
@@ -80,9 +98,10 @@ const Navbar = () => {
               animate={{ opacity: 1, scale: 1 }}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="bg-primary text-white px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-[0.3em] shadow-xl shadow-primary/20 block"
+              className="bg-white hover:bg-stone-50 text-primary px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-[0.3em] shadow-xl shadow-primary/10 flex items-center gap-2 group border border-white hover:border-stone-100 transition-all duration-300"
             >
-              Contáctanos
+              <span>Contáctanos</span>
+              <ArrowUpRight size={14} className="group-hover:rotate-45 transition-transform duration-300" />
             </motion.a>
           </MagneticButton>
         </div>
@@ -133,9 +152,10 @@ const Navbar = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
               onClick={() => setIsOpen(false)}
-              className="bg-primary text-white px-12 py-5 rounded-full text-sm font-black uppercase tracking-[0.3em] shadow-2xl shadow-primary/30"
+              className="bg-white hover:bg-stone-50 text-primary px-12 py-5 rounded-full text-sm font-black uppercase tracking-[0.3em] shadow-2xl shadow-primary/20 flex items-center justify-center gap-2 group border border-white transition-all duration-300"
             >
-              Contáctanos
+              <span>Contáctanos</span>
+              <ArrowUpRight size={18} className="group-hover:rotate-45 transition-transform duration-300" />
             </motion.a>
           </motion.div>
         )}
@@ -236,73 +256,84 @@ const Hero = () => {
         <img 
           src="https://i.postimg.cc/DyntvrTp/20221122-DJI-0135.jpg" 
           alt="Sefirot Background"
-          className="w-full h-full object-cover opacity-40"
+          className="w-full h-full object-cover opacity-60"
           referrerPolicy="no-referrer"
         />
       </motion.div>
       
-      <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
-        <div className="max-w-4xl">
-          <div className="space-y-8">
-            <div className="overflow-visible">
-              <h1 className="flex flex-col items-start">
-                <motion.img
-                  src="https://i.postimg.cc/T3MhddFc/Sefirot_Nuevo.png"
-                  alt="Sefirot Logo"
-                  initial={{ opacity: 0, scale: 0.8, y: 20 }}
-                  animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={{ duration: 1.2, ease: "easeOut" }}
-                  className="h-40 md:h-80 w-auto object-contain"
-                  referrerPolicy="no-referrer"
-                />
-                <SplitText 
-                  text="desarrollos inmobiliarios" 
-                  className="text-stone-300 italic font-medium text-3xl md:text-6xl block lowercase tracking-normal -mt-6 md:-mt-10" 
-                  delay={0.4}
-                />
-              </h1>
-            </div>
-            
-            <motion.p 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
-              className="text-xl md:text-2xl text-stone-300 leading-relaxed max-w-xl font-light"
-            >
-              Construcción y desarrollo de edificios unifamiliares en la ciudad de Rosario con más de 20 años de trayectoria.
-            </motion.p>
-            
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 1, ease: "easeOut" }}
-              className="flex flex-wrap gap-6 pt-4"
-            >
-              <MagneticButton>
-                <Link to="/proyectos">
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="bg-primary text-white px-10 py-5 rounded-full font-bold uppercase tracking-widest flex items-center gap-3 group shadow-2xl shadow-primary/30"
-                  >
-                    Explorar Obras
-                    <ArrowUpRight size={22} className="group-hover:rotate-45 transition-transform duration-500" />
-                  </motion.button>
-                </Link>
-              </MagneticButton>
-            </motion.div>
-          </div>
+      {/* Lateral Glassmorphism Panel anchored from the left */}
+      <motion.div 
+        initial={{ x: -100, opacity: 0 }}
+        animate={{ x: 0, opacity: 1 }}
+        transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        className="absolute left-0 top-0 h-full w-full md:w-[480px] bg-stone-950/20 backdrop-blur-sm border-r border-white/10 z-10 flex flex-col justify-center px-8 md:px-16 pt-24 space-y-8 md:space-y-10"
+      >
+        <div className="overflow-visible">
+          <h1 className="flex flex-col items-start">
+            <motion.img
+              src="https://i.postimg.cc/tThLGpfn/Sefirot-2.png"
+              alt="Sefirot Logo"
+              initial={{ opacity: 0, scale: 0.8, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              transition={{ duration: 1.2, ease: "easeOut" }}
+              className="h-28 md:h-40 w-auto object-contain"
+              referrerPolicy="no-referrer"
+            />
+            <SplitText 
+              text="desarrollos inmobiliarios" 
+              className="text-stone-300 italic font-medium text-xl md:text-3xl block lowercase tracking-normal -mt-3 md:-mt-5" 
+              delay={0.4}
+            />
+          </h1>
         </div>
-      </div>
+        
+        <motion.p 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
+          className="text-base md:text-lg text-stone-200/90 leading-relaxed max-w-sm font-light"
+        >
+          Construcción y desarrollo de edificios unifamiliares en la ciudad de Rosario con más de 20 años de trayectoria.
+        </motion.p>
+        
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.8, ease: "easeOut" }}
+          className="flex flex-wrap gap-4 pt-2"
+        >
+          <MagneticButton>
+            <Link to="/proyectos">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-primary text-white px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs flex items-center gap-2.5 group shadow-xl shadow-primary/30"
+              >
+                Explorar Obras
+                <ArrowUpRight size={18} className="group-hover:rotate-45 transition-transform duration-500" />
+              </motion.button>
+            </Link>
+          </MagneticButton>
+        </motion.div>
+      </motion.div>
 
       <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-12 right-12 text-white/40 flex items-center gap-4"
+        initial={{ opacity: 0, y: 30, scale: 0.95 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ delay: 1.5, duration: 0.8, ease: "easeOut" }}
+        className="absolute bottom-12 right-12 z-20 pointer-events-none md:pointer-events-auto"
       >
-        <span className="text-[10px] uppercase tracking-[0.5em] font-bold">DESDE 2015</span>
-        <div className="w-20 h-px bg-white/20" />
+        <div className="px-5 py-3 rounded-2xl border border-white/10 shadow-2xl bg-stone-900/60 backdrop-blur-md flex items-center gap-3.5 max-w-xs">
+          {/* Mobile notification indicator */}
+          <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center text-white font-black text-xs shadow-md shadow-primary/20">
+            S
+          </div>
+          <div className="flex flex-col text-left">
+            <span className="text-white text-[11px] font-bold tracking-wide">Sefirot Desarrollos</span>
+            <span className="text-stone-300 text-[10px] uppercase tracking-widest font-semibold mt-0.5">Desde 2015</span>
+          </div>
+          <div className="w-2 h-2 rounded-full bg-primary animate-pulse ml-2" />
+        </div>
       </motion.div>
     </section>
   );
@@ -733,6 +764,8 @@ const About = () => {
                 alt="Sefirot Entrance" 
                 className="w-full h-full grayscale hover:grayscale-0 transition-all duration-1000"
               />
+              <div className="absolute inset-0 bg-primary/30 mix-blend-color pointer-events-none group-hover:opacity-0 transition-all duration-1000" />
+              <div className="absolute inset-0 bg-primary/10 mix-blend-multiply pointer-events-none group-hover:opacity-0 transition-all duration-1000" />
             </div>
             <motion.div 
               initial={{ opacity: 0, x: 50 }}
@@ -1249,31 +1282,31 @@ const CIRCULAR_PROJECT_IMAGES = [
  * Unidades disponibles para filtrar.
  */
 const DEPARTMENTS_LIST = [
-  // Sefirot 9 (En Venta / Próximamente)
-  { id: 901, building: 9, floor: '2', unit: 'A', type: '1 Dormitorio', area: '52m²', status: 'Disponible', image: 'https://i.postimg.cc/fbzN5cmM/FACHADA-2.png' },
-  { id: 902, building: 9, floor: '3', unit: 'B', type: 'Monoambiente', area: '38m²', status: 'Disponible', image: 'https://i.postimg.cc/R0gzYWLr/HALL-INGRESO-2.png' },
-  { id: 903, building: 9, floor: '4', unit: 'C', type: '2 Dormitorios', area: '75m²', status: 'Reservado', image: 'https://i.postimg.cc/d0sYn2rq/PISO-9-1.png' },
+  // Sefirot 9 (Disponibles para Venta)
+  { id: 912, building: 9, floor: '1', unit: '02', type: '1 Dormitorio', area: '52m²', status: 'Disponible', image: 'https://i.postimg.cc/fbzN5cmM/FACHADA-2.png' },
+  { id: 913, building: 9, floor: '1', unit: '03', type: 'Monoambiente', area: '38m²', status: 'Disponible', image: 'https://i.postimg.cc/R0gzYWLr/HALL-INGRESO-2.png' },
+  { id: 922, building: 9, floor: '2', unit: '02', type: '1 Dormitorio', area: '52m²', status: 'Disponible', image: 'https://i.postimg.cc/d0sYn2rq/PISO-9-1.png' },
+  { id: 923, building: 9, floor: '2', unit: '03', type: 'Monoambiente', area: '38m²', status: 'Disponible', image: 'https://i.postimg.cc/8CZVY7Bq/QUINCHO-2.png' },
+  { id: 931, building: 9, floor: '3', unit: '01', type: '2 Dormitorios', area: '75m²', status: 'Disponible', image: 'https://i.postimg.cc/fbzN5cmM/FACHADA-2.png' },
+  { id: 933, building: 9, floor: '3', unit: '03', type: 'Monoambiente', area: '38m²', status: 'Disponible', image: 'https://i.postimg.cc/R0gzYWLr/HALL-INGRESO-2.png' },
+  { id: 952, building: 9, floor: '5', unit: '02', type: '1 Dormitorio', area: '52m²', status: 'Disponible', image: 'https://i.postimg.cc/d0sYn2rq/PISO-9-1.png' },
+  { id: 981, building: 9, floor: '8', unit: '01', type: '2 Dormitorios', area: '75m²', status: 'Disponible', image: 'https://i.postimg.cc/8CZVY7Bq/QUINCHO-2.png' },
+  { id: 982, building: 9, floor: '8', unit: '02', type: '1 Dormitorio', area: '52m²', status: 'Disponible', image: 'https://i.postimg.cc/fbzN5cmM/FACHADA-2.png' },
   
-  // Sefirot 8
-  { id: 801, building: 8, floor: '1', unit: 'A', type: '2 Dormitorios', area: '82m²', status: 'Disponible', image: 'https://i.postimg.cc/5092Ycn9/SEF8-EXTERIOR-URBANA-02.jpg' },
-  { id: 802, building: 8, floor: '2', unit: 'B', type: '1 Dormitorio', area: '48m²', status: 'Disponible', image: 'https://i.postimg.cc/nLGLhVYJ/SEF8-EXTERIOR-CONTRAFRENTE-01.jpg' },
+  // Sefirot 8 (Disponibles para Venta)
+  { id: 841, building: 8, floor: '4', unit: '01', type: '1 Dormitorio', area: '48m²', status: 'Disponible', image: 'https://i.postimg.cc/5092Ycn9/SEF8-EXTERIOR-URBANA-02.jpg' },
+  { id: 851, building: 8, floor: '5', unit: '01', type: '1 Dormitorio', area: '48m²', status: 'Disponible', image: 'https://i.postimg.cc/nLGLhVYJ/SEF8-EXTERIOR-CONTRAFRENTE-01.jpg' },
+  { id: 861, building: 8, floor: '6', unit: '01', type: '1 Dormitorio', area: '48m²', status: 'Disponible', image: 'https://i.postimg.cc/LX48YdNn/SEF8-EXTERIOR-P3-BALCON-OFICINA.jpg' },
+  { id: 871, building: 8, floor: '7', unit: '01', type: '2 Dormitorios', area: '82m²', status: 'Disponible', image: 'https://i.postimg.cc/5092Ycn9/SEF8-EXTERIOR-URBANA-02.jpg' },
+  { id: 881, building: 8, floor: '8', unit: '01', type: '2 Dormitorios', area: '82m²', status: 'Disponible', image: 'https://i.postimg.cc/nLGLhVYJ/SEF8-EXTERIOR-CONTRAFRENTE-01.jpg' },
   
-  // Sefirot 7
-  { id: 701, building: 7, floor: 'PB', unit: 'A', type: 'Local Comercial', area: '110m²', status: 'Disponible', image: 'https://i.postimg.cc/brHg6tQX/FACHADA.png' },
-  { id: 702, building: 7, floor: '5', unit: 'C', type: '1 Dormitorio', area: '50m²', status: 'Vendido', image: 'https://i.postimg.cc/6q0VVNXp/IMG-20250530-WA0056.jpg' },
-  
-  // Sefirot 6
-  { id: 601, building: 6, floor: '1', unit: 'A', type: '1 Dormitorio', area: '45m²', status: 'Vendido', image: 'https://i.postimg.cc/h47HLy6x/DJI-0024.jpg' },
-  { id: 602, building: 6, floor: '8', unit: 'B', type: '2 Dormitorios', area: '78m²', status: 'Vendido', image: 'https://i.postimg.cc/v86prqkW/DJI-0022.jpg' },
-
-  // Sefirot 5
-  { id: 501, building: 5, floor: '2', unit: 'A', type: 'Monoambiente', area: '34m²', status: 'Vendido', image: 'https://i.postimg.cc/j5SFnvfG/Frente-1.jpg' },
-  
-  // Genéricos para rellenar los 9 edificios
-  { id: 401, building: 4, floor: '3', unit: 'A', type: '2 Dormitorios', area: '80m²', status: 'Vendido', image: 'https://i.postimg.cc/6q5t3d6v/DSC-4656vale.jpg' },
-  { id: 301, building: 3, floor: '4', unit: 'B', type: '1 Dormitorio', area: '50m²', status: 'Vendido', image: 'https://i.postimg.cc/mrt9cHkD/03.jpg' },
-  { id: 201, building: 2, floor: '6', unit: 'A', type: '1 Dormitorio', area: '55m²', status: 'Vendido', image: 'https://i.postimg.cc/qM32wnXS/DSC-9195.jpg' },
-  { id: 101, building: 1, floor: 'PB', unit: 'A', type: 'Local Comercial', area: '95m²', status: 'Vendido', image: 'https://i.postimg.cc/pXWtYYHV/2-P2604.jpg' },
+  // Sefirot 7 (Disponibles para Venta)
+  { id: 711, building: 7, floor: '1', unit: '01', type: '1 Dormitorio', area: '50m²', status: 'Disponible', image: 'https://i.postimg.cc/brHg6tQX/FACHADA.png' },
+  { id: 712, building: 7, floor: '1', unit: '02', type: '2 Dormitorios', area: '76m²', status: 'Disponible', image: 'https://i.postimg.cc/6q0VVNXp/IMG-20250530-WA0056.jpg' },
+  { id: 733, building: 7, floor: '3', unit: '03', type: 'Monoambiente', area: '36m²', status: 'Disponible', image: 'https://i.postimg.cc/brHg6tQX/FACHADA.png' },
+  { id: 762, building: 7, floor: '6', unit: '02', type: '1 Dormitorio', area: '50m²', status: 'Disponible', image: 'https://i.postimg.cc/6q0VVNXp/IMG-20250530-WA0056.jpg' },
+  { id: 791, building: 7, floor: '9', unit: '01', type: '2 Dormitorios', area: '76m²', status: 'Disponible', image: 'https://i.postimg.cc/brHg6tQX/FACHADA.png' },
+  { id: 7101, building: 7, floor: '10', unit: '01', type: 'Semipiso Premium', area: '112m²', status: 'Disponible', image: 'https://i.postimg.cc/6q0VVNXp/IMG-20250530-WA0056.jpg' },
 ];
 
 /**
