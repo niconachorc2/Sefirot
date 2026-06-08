@@ -293,7 +293,7 @@ const Hero = () => {
           transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
           className="text-base md:text-lg text-stone-200/90 leading-relaxed max-w-sm font-light"
         >
-          Construcción y desarrollo de edificios unifamiliares en la ciudad de Rosario con más de 20 años de trayectoria.
+          Construimos espacios para disfrutar de la vida. Desarrollo y ejecución de edificios de categoría en la ciudad de Rosario con más de 20 años de trayectoria.
         </motion.p>
         
         <motion.div 
@@ -596,14 +596,29 @@ const Contact = () => {
 
             <div className="space-y-12">
               {[
-                { icon: <Phone size={24} />, label: "Llámanos", val: "+54 9 341 691-0558", href: "tel:+5493416910558" },
-                { icon: <Mail size={24} />, label: "Escríbenos", val: "contacto@sefirot.com.ar", href: "mailto:contacto@sefirot.com.ar" },
-                { icon: <MapPin size={24} />, label: "Visítanos", val: "Rosario, Santa Fe, Argentina", href: "https://maps.google.com/?q=Rosario, Santa Fe, Argentina" }
+                { 
+                  icon: <MapPin size={24} />, 
+                  label: "Oficina", 
+                  val: "Martin Rodriguez 1694, Piso 08 Dpto B, Rosario", 
+                  href: "https://maps.google.com/?q=Martin+Rodriguez+1694+Piso+08+Dpto+B+Rosario" 
+                },
+                { 
+                  icon: <Phone size={24} />, 
+                  label: "Administración (Celular)", 
+                  val: "+54 9 341 691-0558", 
+                  href: "https://api.whatsapp.com/send?phone=5493416910558&text=Hola!%20Me%20comunico%20con%20Administración" 
+                },
+                { 
+                  icon: <Mail size={24} />, 
+                  label: "Escríbenos", 
+                  val: "contacto@sefirot.com.ar", 
+                  href: "mailto:contacto@sefirot.com.ar" 
+                }
               ].map((item, i) => (
                 <motion.a 
                   key={i}
                   href={item.href}
-                  target={item.href.startsWith('http') ? "_blank" : undefined}
+                  target={item.href.startsWith('http') || item.href === '#' ? "_blank" : undefined}
                   rel={item.href.startsWith('http') ? "noopener noreferrer" : undefined}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -611,12 +626,12 @@ const Contact = () => {
                   transition={{ delay: i * 0.1 }}
                   className="flex items-start gap-8 group cursor-pointer"
                 >
-                  <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500">
+                  <div className="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500 flex-shrink-0">
                     {item.icon}
                   </div>
                   <div>
                     <p className="text-stone-500 text-[10px] uppercase tracking-[0.4em] font-black mb-2">{item.label}</p>
-                    <p className="text-2xl font-bold tracking-tight group-hover:text-primary transition-colors">{item.val}</p>
+                    <p className="text-2xl font-bold tracking-tight group-hover:text-primary transition-colors leading-tight">{item.val}</p>
                   </div>
                 </motion.a>
               ))}
@@ -691,34 +706,48 @@ const Contact = () => {
 
 const Footer = () => {
   return (
-    <footer className="py-12 px-6 bg-stone-950 text-white border-t border-white/5">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
-        <div className="flex items-center gap-2">
-          <span className="text-2xl font-bold tracking-tighter text-primary">sefirot.desarrollos</span>
+    <footer className="py-16 px-6 bg-stone-950 text-white border-t border-white/5">
+      <div className="max-w-7xl mx-auto space-y-12">
+        {/* Office and Administration Info */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pb-10 border-b border-white/5 text-stone-400">
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.4em] font-black mb-2 text-stone-500">Oficina Administración</p>
+            <p className="font-medium text-white text-base">Martin Rodriguez 1694 - Piso 08 Dpto B, Rosario</p>
+          </div>
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.4em] font-black mb-2 text-stone-500">Administración Celular</p>
+            <p className="font-medium text-white text-base">+54 9 341 691-0558</p>
+          </div>
         </div>
-        <p className="text-stone-500 text-sm">
-          © {new Date().getFullYear()} sefirot.desarrollos. Todos los derechos reservados.
-        </p>
-        <div className="flex gap-6">
-          {[
-            { name: 'Instagram', url: 'https://www.instagram.com/sefirot.desarrollos' },
-            { name: 'WhatsApp', url: 'https://api.whatsapp.com/send?phone=5493416910558&text=Hola!%20Me%20comunico%20desde%20la%20web!' },
-            { name: 'Facebook', url: 'https://www.facebook.com/sefirot.desarrollos' }
-          ].map((social, i) => (
-            <motion.a 
-              key={social.name} 
-              href={social.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              viewport={{ once: true }}
-              className="text-stone-500 hover:text-primary transition-colors text-sm uppercase tracking-widest font-bold"
-            >
-              {social.name}
-            </motion.a>
-          ))}
+
+        <div className="flex flex-col md:flex-row justify-between items-center gap-8 pt-4">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl font-bold tracking-tighter text-primary">sefirot.desarrollos</span>
+          </div>
+          <p className="text-stone-500 text-sm text-center md:text-left">
+            © {new Date().getFullYear()} sefirot.desarrollos. Todos los derechos reservados.
+          </p>
+          <div className="flex gap-6">
+            {[
+              { name: 'Instagram', url: 'https://www.instagram.com/sefirot.desarrollos' },
+              { name: 'WhatsApp', url: 'https://api.whatsapp.com/send?phone=5493416910558&text=Hola!%20Me%20comunico%20desde%20la%20web!' },
+              { name: 'Facebook', url: 'https://www.facebook.com/sefirot.desarrollos' }
+            ].map((social, i) => (
+              <motion.a 
+                key={social.name} 
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="text-stone-500 hover:text-primary transition-colors text-sm uppercase tracking-widest font-bold"
+              >
+                {social.name}
+              </motion.a>
+            ))}
+          </div>
         </div>
       </div>
     </footer>
@@ -1040,6 +1069,129 @@ const ProjectCarousel = () => {
   );
 };
 
+const DepartmentCard = ({ dept }: { dept: any; key?: any }) => {
+  const [selectedAreaType, setSelectedAreaType] = useState<'total' | 'cubierta' | 'descubierta'>('total');
+
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, scale: 0.9, y: 30 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.9 }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+      className="group bg-white rounded-[3rem] overflow-hidden shadow-xl border border-stone-100 flex flex-col h-full hover:shadow-2xl hover:border-primary/20 transition-all duration-500"
+    >
+      <div className="aspect-[16/10] overflow-hidden relative">
+        <img 
+          src={dept.image} 
+          alt={dept.type} 
+          className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
+          referrerPolicy="no-referrer"
+        />
+        <div className="absolute top-6 left-6 z-10">
+          <span className={`px-4 py-1.5 rounded-full text-[10px] font-black tracking-[0.2em] uppercase shadow-lg border backdrop-blur-md ${
+            dept.status === 'Disponible' 
+              ? 'bg-green-500/20 text-green-600 border-green-500/30' 
+              : dept.status === 'Reservado'
+              ? 'bg-amber-500/20 text-amber-600 border-amber-500/30'
+              : 'bg-stone-500/20 text-stone-600 border-stone-500/30'
+          }`}>
+            {dept.status}
+          </span>
+        </div>
+        <div className="absolute bottom-6 right-6 z-10">
+          <div className="bg-primary border border-primary/30 text-white px-4 py-1.5 rounded-full text-[10px] font-black tracking-widest uppercase shadow-lg">
+            Sefirot {dept.building}
+          </div>
+        </div>
+      </div>
+
+      <div className="p-10 flex flex-col flex-1">
+        <div className="flex justify-between items-start mb-6">
+          <div>
+            <h3 className="text-3xl font-bold tracking-tighter text-stone-900 mb-2 flex flex-col leading-none">
+              <span className="block">Piso {dept.floor}</span>
+              <span className="text-primary italic font-medium text-2xl block mt-1.5">Unidad {dept.unit}</span>
+            </h3>
+            <p className="text-stone-400 font-bold uppercase tracking-[0.3em] text-[10px]">{dept.type}</p>
+          </div>
+          <div className="text-right flex flex-col items-end min-w-[120px]">
+            <div className="overflow-hidden h-8 flex items-center justify-end">
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={selectedAreaType}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.25, ease: "easeOut" }}
+                  className="block text-2xl font-black text-stone-900 tracking-tighter"
+                >
+                  {selectedAreaType === 'total' 
+                    ? (dept.supTotal || dept.area) 
+                    : selectedAreaType === 'cubierta' 
+                      ? (dept.supCubierta || dept.area) 
+                      : (dept.supDescubierta || '0m²')}
+                </motion.span>
+              </AnimatePresence>
+            </div>
+            <div className="flex flex-col gap-1 mt-2.5 bg-stone-50 p-1 rounded-xl border border-stone-100 w-20 relative">
+              {(['total', 'cubierta', 'descubierta'] as const).map((type) => {
+                const isActive = selectedAreaType === type;
+                return (
+                  <motion.button
+                    key={type}
+                    onClick={() => setSelectedAreaType(type)}
+                    whileTap={{ scale: 0.92 }}
+                    className={`relative text-[8px] font-black uppercase tracking-wider py-1.5 px-2 rounded-lg text-center transition-colors duration-300 z-10 w-full ${
+                      isActive
+                        ? 'text-white font-extrabold'
+                        : 'text-stone-400 hover:text-stone-700 hover:bg-stone-100/30'
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId={`activeBG-${dept.id}`}
+                        className="absolute inset-0 bg-primary rounded-lg -z-10 shadow-sm"
+                        transition={{ type: "spring", stiffness: 380, damping: 26 }}
+                      />
+                    )}
+                    <motion.span 
+                      className="relative z-20 block text-[8px]"
+                      animate={isActive ? { scale: [1, 1.15, 1], y: [0, -1, 0] } : { scale: 1, y: 0 }}
+                      transition={{ duration: 0.3, ease: "easeOut" }}
+                    >
+                      {type === 'total' ? 'Total' : type === 'cubierta' ? 'Cub.' : 'Desc.'}
+                    </motion.span>
+                  </motion.button>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-auto space-y-6">
+          <div className="h-px bg-stone-100 w-full" />
+          <div className="flex items-center gap-6">
+            <MagneticButton className="flex-1">
+              <a 
+                href={`https://api.whatsapp.com/send?phone=5493416910558&text=Hola!%20Me%20interesa%20la%20unidad%20Piso%20${dept.floor}%20Unidad%20${dept.unit}%20en%20Sefirot%20${dept.building}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full bg-stone-950 text-white py-5 rounded-2xl font-black uppercase tracking-[0.3em] text-[10px] text-center block hover:bg-primary transition-colors"
+              >
+                Consultar
+              </a>
+            </MagneticButton>
+            <button className="w-16 h-16 rounded-2xl bg-stone-50 border border-stone-100 flex items-center justify-center text-stone-400 hover:text-primary hover:border-primary/30 transition-all group">
+              <ArrowUpRight size={20} className="group-hover:rotate-45 transition-transform" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 const DepartmentsPage = () => {
   const [filterBuilding, setFilterBuilding] = useState<string>('todos');
   const [filterType, setFilterType] = useState<string>('todos');
@@ -1071,8 +1223,8 @@ const DepartmentsPage = () => {
           >
             Busca tu hogar
           </motion.span>
-          <RevealText className="text-6xl md:text-9xl font-bold tracking-tighter leading-tight text-stone-900 inline-block">
-            Nuestros <span className="italic font-light text-primary">Departamentos.</span>
+          <RevealText className="text-5xl md:text-8xl font-bold tracking-tighter leading-tight text-stone-900 inline-block">
+            Nuestros <span className="italic font-light text-primary">Departamentos Ofrecidos.</span>
           </RevealText>
         </header>
 
@@ -1152,76 +1304,8 @@ const DepartmentsPage = () => {
         {/* Results */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
           <AnimatePresence mode="popLayout">
-            {filteredDepartments.map((dept, idx) => (
-              <motion.div
-                key={dept.id}
-                layout
-                initial={{ opacity: 0, scale: 0.9, y: 30 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="group bg-white rounded-[3rem] overflow-hidden shadow-xl border border-stone-100 flex flex-col h-full hover:shadow-2xl hover:border-primary/20 transition-all duration-500"
-              >
-                <div className="aspect-[16/10] overflow-hidden relative">
-                  <img 
-                    src={dept.image} 
-                    alt={dept.type} 
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
-                    referrerPolicy="no-referrer"
-                  />
-                  <div className="absolute top-6 left-6 z-10">
-                    <span className={`px-4 py-1.5 rounded-full text-[10px] font-black tracking-[0.2em] uppercase shadow-lg border backdrop-blur-md ${
-                      dept.status === 'Disponible' 
-                        ? 'bg-green-500/20 text-green-600 border-green-500/30' 
-                        : dept.status === 'Reservado'
-                        ? 'bg-amber-500/20 text-amber-600 border-amber-500/30'
-                        : 'bg-stone-500/20 text-stone-600 border-stone-500/30'
-                    }`}>
-                      {dept.status}
-                    </span>
-                  </div>
-                  <div className="absolute bottom-6 right-6 z-10">
-                    <div className="bg-stone-900/40 backdrop-blur-md border border-white/20 text-white px-4 py-1.5 rounded-full text-[10px] font-bold tracking-widest uppercase">
-                      Sefirot {dept.building}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="p-10 flex flex-col flex-1">
-                  <div className="flex justify-between items-start mb-6">
-                    <div>
-                      <h3 className="text-3xl font-bold tracking-tighter text-stone-900 mb-1">
-                        Piso {dept.floor}
-                        <span className="text-primary italic opacity-60 ml-2">Depto {dept.unit}</span>
-                      </h3>
-                      <p className="text-stone-400 font-bold uppercase tracking-[0.3em] text-[10px]">{dept.type}</p>
-                    </div>
-                    <div className="text-right">
-                      <span className="block text-2xl font-black text-stone-900 tracking-tighter">{dept.area}</span>
-                      <span className="text-[10px] font-black uppercase text-stone-400 tracking-widest">Sup. Total</span>
-                    </div>
-                  </div>
-
-                  <div className="mt-auto space-y-6">
-                    <div className="h-px bg-stone-100 w-full" />
-                    <div className="flex items-center gap-6">
-                      <MagneticButton className="flex-1">
-                        <a 
-                          href={`https://api.whatsapp.com/send?phone=5493416910558&text=Hola!%20Me%20interesa%20el%20depto%20${dept.floor}${dept.unit}%20en%20Sefirot%20${dept.building}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="w-full bg-stone-950 text-white py-5 rounded-2xl font-black uppercase tracking-[0.3em] text-[10px] text-center block hover:bg-primary transition-colors"
-                        >
-                          Consultar
-                        </a>
-                      </MagneticButton>
-                      <button className="w-16 h-16 rounded-2xl bg-stone-50 border border-stone-100 flex items-center justify-center text-stone-400 hover:text-primary hover:border-primary/30 transition-all group">
-                        <ArrowUpRight size={20} className="group-hover:rotate-45 transition-transform" />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+            {filteredDepartments.map((dept) => (
+              <DepartmentCard key={dept.id} dept={dept} />
             ))}
           </AnimatePresence>
           
@@ -1283,30 +1367,30 @@ const CIRCULAR_PROJECT_IMAGES = [
  */
 const DEPARTMENTS_LIST = [
   // Sefirot 9 (Disponibles para Venta)
-  { id: 912, building: 9, floor: '1', unit: '02', type: '1 Dormitorio', area: '52m²', status: 'Disponible', image: 'https://i.postimg.cc/bNj0ZSgh/LIVING-COMEDOR-PISO-01-2.png' },
-  { id: 913, building: 9, floor: '1', unit: '03', type: 'Monoambiente', area: '38m²', status: 'Disponible', image: 'https://i.postimg.cc/R0gzYWLr/HALL-INGRESO-2.png' },
-  { id: 922, building: 9, floor: '2', unit: '02', type: '1 Dormitorio', area: '52m²', status: 'Disponible', image: 'https://i.postimg.cc/fTh7VSCQ/PISO-4-DORMITORIO.png' },
-  { id: 923, building: 9, floor: '2', unit: '03', type: 'Monoambiente', area: '38m²', status: 'Disponible', image: 'https://i.postimg.cc/8CZVY7Bq/QUINCHO-2.png' },
-  { id: 931, building: 9, floor: '3', unit: '01', type: '2 Dormitorios', area: '75m²', status: 'Disponible', image: 'https://i.postimg.cc/8PVd7f4V/PISO-04.png' },
-  { id: 933, building: 9, floor: '3', unit: '03', type: 'Monoambiente', area: '38m²', status: 'Disponible', image: 'https://i.postimg.cc/Wb6GgpYR/QUINCHO-1.png' },
-  { id: 952, building: 9, floor: '5', unit: '02', type: '1 Dormitorio', area: '52m²', status: 'Disponible', image: 'https://i.postimg.cc/VLc9J0gY/PISO-9.png' },
-  { id: 981, building: 9, floor: '8', unit: '01', type: '2 Dormitorios', area: '75m²', status: 'Disponible', image: 'https://i.postimg.cc/BQG5jPp9/PISO-9-2.png' },
-  { id: 982, building: 9, floor: '8', unit: '02', type: '1 Dormitorio', area: '52m²', status: 'Disponible', image: 'https://i.postimg.cc/fbzN5cmM/FACHADA-2.png' },
+  { id: 912, building: 9, floor: '1', unit: '02', type: '1 Dormitorio', area: '52m²', supTotal: '52m²', supCubierta: '46m²', supDescubierta: '6m²', status: 'Disponible', image: 'https://i.postimg.cc/bNj0ZSgh/LIVING-COMEDOR-PISO-01-2.png' },
+  { id: 913, building: 9, floor: '1', unit: '03', type: 'Monoambiente', area: '38m²', supTotal: '38m²', supCubierta: '34m²', supDescubierta: '4m²', status: 'Disponible', image: 'https://i.postimg.cc/R0gzYWLr/HALL-INGRESO-2.png' },
+  { id: 922, building: 9, floor: '2', unit: '02', type: '1 Dormitorio', area: '52m²', supTotal: '52m²', supCubierta: '46m²', supDescubierta: '6m²', status: 'Disponible', image: 'https://i.postimg.cc/fTh7VSCQ/PISO-4-DORMITORIO.png' },
+  { id: 923, building: 9, floor: '2', unit: '03', type: 'Monoambiente', area: '38m²', supTotal: '38m²', supCubierta: '34m²', supDescubierta: '4m²', status: 'Disponible', image: 'https://i.postimg.cc/8CZVY7Bq/QUINCHO-2.png' },
+  { id: 931, building: 9, floor: '3', unit: '01', type: '2 Dormitorios', area: '75m²', supTotal: '75m²', supCubierta: '67m²', supDescubierta: '8m²', status: 'Disponible', image: 'https://i.postimg.cc/8PVd7f4V/PISO-04.png' },
+  { id: 933, building: 9, floor: '3', unit: '03', type: 'Monoambiente', area: '38m²', supTotal: '38m²', supCubierta: '34m²', supDescubierta: '4m²', status: 'Disponible', image: 'https://i.postimg.cc/Wb6GgpYR/QUINCHO-1.png' },
+  { id: 952, building: 9, floor: '5', unit: '02', type: '1 Dormitorio', area: '52m²', supTotal: '52m²', supCubierta: '46m²', supDescubierta: '6m²', status: 'Disponible', image: 'https://i.postimg.cc/VLc9J0gY/PISO-9.png' },
+  { id: 981, building: 9, floor: '8', unit: '01', type: '2 Dormitorios', area: '75m²', supTotal: '75m²', supCubierta: '67m²', supDescubierta: '8m²', status: 'Disponible', image: 'https://i.postimg.cc/BQG5jPp9/PISO-9-2.png' },
+  { id: 982, building: 9, floor: '8', unit: '02', type: '1 Dormitorio', area: '52m²', supTotal: '52m²', supCubierta: '46m²', supDescubierta: '6m²', status: 'Disponible', image: 'https://i.postimg.cc/fbzN5cmM/FACHADA-2.png' },
   
   // Sefirot 8 (Disponibles para Venta)
-  { id: 841, building: 8, floor: '4', unit: '01', type: '1 Dormitorio', area: '48m²', status: 'Disponible', image: 'https://i.postimg.cc/J0XQ9bQk/PISO-4MONO-copia.png' },
-  { id: 851, building: 8, floor: '5', unit: '01', type: '1 Dormitorio', area: '48m²', status: 'Disponible', image: 'https://i.postimg.cc/D0GctqcW/SEF8-P9-1-DORMITORIO.jpg' },
-  { id: 861, building: 8, floor: '6', unit: '01', type: '1 Dormitorio', area: '48m²', status: 'Disponible', image: 'https://i.postimg.cc/LX48YdNn/SEF8-EXTERIOR-P3-BALCON-OFICINA.jpg' },
-  { id: 871, building: 8, floor: '7', unit: '01', type: '2 Dormitorios', area: '82m²', status: 'Disponible', image: 'https://i.postimg.cc/C584Wj4s/PISO-6-2-DORM.png' },
-  { id: 881, building: 8, floor: '8', unit: '01', type: '2 Dormitorios', area: '82m²', status: 'Disponible', image: 'https://i.postimg.cc/nLGLhVYJ/SEF8-EXTERIOR-CONTRAFRENTE-01.jpg' },
+  { id: 841, building: 8, floor: '4', unit: '01', type: '1 Dormitorio', area: '48m²', supTotal: '48m²', supCubierta: '44m²', supDescubierta: '4m²', status: 'Disponible', image: 'https://i.postimg.cc/J0XQ9bQk/PISO-4MONO-copia.png' },
+  { id: 851, building: 8, floor: '5', unit: '01', type: '1 Dormitorio', area: '48m²', supTotal: '48m²', supCubierta: '44m²', supDescubierta: '4m²', status: 'Disponible', image: 'https://i.postimg.cc/D0GctqcW/SEF8-P9-1-DORMITORIO.jpg' },
+  { id: 861, building: 8, floor: '6', unit: '01', type: '1 Dormitorio', area: '48m²', supTotal: '48m²', supCubierta: '44m²', supDescubierta: '4m²', status: 'Disponible', image: 'https://i.postimg.cc/LX48YdNn/SEF8-EXTERIOR-P3-BALCON-OFICINA.jpg' },
+  { id: 871, building: 8, floor: '7', unit: '01', type: '2 Dormitorios', area: '82m²', supTotal: '82m²', supCubierta: '74m²', supDescubierta: '8m²', status: 'Disponible', image: 'https://i.postimg.cc/C584Wj4s/PISO-6-2-DORM.png' },
+  { id: 881, building: 8, floor: '8', unit: '01', type: '2 Dormitorios', area: '82m²', supTotal: '82m²', supCubierta: '74m²', supDescubierta: '8m²', status: 'Disponible', image: 'https://i.postimg.cc/nLGLhVYJ/SEF8-EXTERIOR-CONTRAFRENTE-01.jpg' },
   
   // Sefirot 7 (Disponibles para Venta)
-  { id: 711, building: 7, floor: '1', unit: '01', type: '1 Dormitorio', area: '50m²', status: 'Disponible', image: 'https://i.postimg.cc/Mp3zFRrk/HALL-INGRESO.jpg' },
-  { id: 712, building: 7, floor: '1', unit: '02', type: '2 Dormitorios', area: '76m²', status: 'Disponible', image: 'https://i.postimg.cc/0N69RQLS/QUINCHO-2.jpg' },
-  { id: 733, building: 7, floor: '3', unit: '03', type: 'Monoambiente', area: '36m²', status: 'Disponible', image: 'https://i.postimg.cc/QdnbnsWt/IMG-20250530-WA0122.jpg' },
-  { id: 762, building: 7, floor: '6', unit: '02', type: '1 Dormitorio', area: '50m²', status: 'Disponible', image: 'https://i.postimg.cc/gks483zR/IMG-20250530-WA0084.jpg' },
-  { id: 791, building: 7, floor: '9', unit: '01', type: '2 Dormitorios', area: '76m²', status: 'Disponible', image: 'https://i.postimg.cc/FK2N9v4c/PILETA.png' },
-  { id: 7101, building: 7, floor: '10', unit: '01', type: 'Semipiso Premium', area: '112m²', status: 'Disponible', image: 'https://i.postimg.cc/GpZdcRCp/Whats-App-Image-2026-04-22-at-15-11-49.jpg' },
+  { id: 711, building: 7, floor: '1', unit: '01', type: '1 Dormitorio', area: '50m²', supTotal: '50m²', supCubierta: '45m²', supDescubierta: '5m²', status: 'Disponible', image: 'https://i.postimg.cc/Mp3zFRrk/HALL-INGRESO.jpg' },
+  { id: 712, building: 7, floor: '1', unit: '02', type: '2 Dormitorios', area: '76m²', supTotal: '76m²', supCubierta: '68m²', supDescubierta: '8m²', status: 'Disponible', image: 'https://i.postimg.cc/0N69RQLS/QUINCHO-2.jpg' },
+  { id: 733, building: 7, floor: '3', unit: '03', type: 'Monoambiente', area: '36m²', supTotal: '36m²', supCubierta: '33m²', supDescubierta: '3m²', status: 'Disponible', image: 'https://i.postimg.cc/gks483zR/IMG-20250530-WA0084.jpg' },
+  { id: 762, building: 7, floor: '6', unit: '02', type: '1 Dormitorio', area: '50m²', supTotal: '50m²', supCubierta: '45m²', supDescubierta: '5m²', status: 'Disponible', image: 'https://i.postimg.cc/gks483zR/IMG-20250530-WA0084.jpg' },
+  { id: 791, building: 7, floor: '9', unit: '01', type: '2 Dormitorios', area: '76m²', supTotal: '76m²', supCubierta: '68m²', supDescubierta: '8m²', status: 'Disponible', image: 'https://i.postimg.cc/FK2N9v4c/PILETA.png' },
+  { id: 7101, building: 7, floor: '10', unit: '02', type: 'Semipiso Premium', area: '112m²', supTotal: '112m²', supCubierta: '96m²', supDescubierta: '16m²', status: 'Disponible', image: 'https://i.postimg.cc/GpZdcRCp/Whats-App-Image-2026-04-22-at-15-11-49.jpg' },
 ];
 
 /**
@@ -1324,15 +1408,10 @@ const PROJECTS_LIST = [
     mainImage: "https://i.postimg.cc/cLMLsHyR/Generated-Image-May-17-2026-9-09PM.png",
     description: "Donde el diseño se encuentra con la armonía. Ubicado en una esquina privilegiada, este proyecto destaca por su aprovechamiento integral de la luz y una arquitectura que dialoga con el entorno residencial. Ideal para quienes buscan tranquilidad sin alejarse del pulso urbano.",
     gallery: [
-      "https://i.postimg.cc/BQSGcc0v/1-P2604.jpg",
       "https://i.postimg.cc/tCqHttjC/01.jpg",
       "https://i.postimg.cc/xTfSyy21/3-P2604.jpg",
       "https://i.postimg.cc/ZKbhFFSp/DSC-0557.jpg",
       "https://i.postimg.cc/qM32wnXS/DSC-9195.jpg",
-      "https://i.postimg.cc/CKXqbxn1/06.jpg",
-      "https://i.postimg.cc/zBhR7YTh/DSC-2506.jpg",
-      "https://i.postimg.cc/C18f7pbb/DSC-2564.jpg",
-      "https://i.postimg.cc/zf6gTGHC/DSC-2602.jpg",
     ]
   },
   {
@@ -1341,12 +1420,12 @@ const PROJECTS_LIST = [
     address: "9 DE JULIO 1547",
     category: "Desarrollo Inmobiliario",
     mainImage: "https://i.postimg.cc/3Jkrzb7k/Generated-Image-May-24-2026-5-59PM.png",
-    description: "Modernidad en el corazón de la ciudad. Una propuesta pensada para el ritmo de vida actual. Espacios funcionales con terminaciones premium, situados en un punto estratégico que conecta la comodidad del centro con la calidez de un barrio tradicional.",
+    description: "Modernidad en el corazón de la ciudad. Una propuesta pensada para el ritmo de vida actual. Espacios funcionales con terminaciones de alta gama, situados en un punto estratégico que conecta la comodidad del centro con la calidez de un barrio tradicional.",
     gallery: [
-      "https://i.postimg.cc/jSXnMv50/1-9J1547.jpg",
-      "https://i.postimg.cc/mgw1mVDW/4-9J1547.jpg",
-      "https://i.postimg.cc/13HVvMts/DSC-9156.jpg",
       "https://i.postimg.cc/t45nBDTq/DSC-9189.jpg",
+      "https://i.postimg.cc/5tXWrNWy/Generated-Image-June-08-2026-2-14PM.png",
+      "https://i.postimg.cc/251Nt8N3/Generated-Image-June-08-2026-2-15PM.png",
+      "https://i.postimg.cc/Gp4nfhn2/Generated-Image-June-08-2026-2-15PM-(1).png",
     ]
   },
   {
@@ -1357,12 +1436,12 @@ const PROJECTS_LIST = [
     mainImage: "https://i.postimg.cc/T1VrjD4T/Generated-Image-May-17-2026-9-42PM.png",
     description: "Sofisticación y confort térmico. Este edificio redefine la experiencia de vivir en el centro-norte. Con una estética vanguardista y materiales de alta calidad, SEF 3 ofrece ambientes amplios diseñados para maximizar la entrada de aire y luz natural.",
     gallery: [
-      "https://i.postimg.cc/CKXqbxn1/06.jpg",
       "https://i.postimg.cc/zBhR7YTh/DSC-2506.jpg",
       "https://i.postimg.cc/C18f7pbb/DSC-2564.jpg",
-      "https://i.postimg.cc/zf6gTGHC/DSC-2602.jpg",
-      "https://i.postimg.cc/x8McM37p/05.jpg",
       "https://i.postimg.cc/vBp44NPV/20200709-115824.jpg",
+      "https://i.postimg.cc/BQSGcc0v/1-P2604.jpg",
+      "https://i.postimg.cc/CKXqbxn1/06.jpg",
+      "https://i.postimg.cc/zf6gTGHC/DSC-2602.jpg",
     ]
   },
   {
@@ -1373,17 +1452,11 @@ const PROJECTS_LIST = [
     mainImage: "https://i.postimg.cc/6q5t3d6v/DSC-4656vale.jpg",
     description: "Equilibrio entre lo clásico y lo contemporáneo. Situado en una zona de gran crecimiento, este proyecto combina una fachada impactante con interiores minimalistas. Es la síntesis perfecta de espacialidad y diseño, pensado para quienes valoran los detalles constructivos.",
     gallery: [
-      "https://i.postimg.cc/k4y7qjC7/2-M2517.jpg",
       "https://i.postimg.cc/j5hRt8T5/8.jpg",
       "https://i.postimg.cc/MHKqTyZR/DSC-4667.jpg",
-      "https://i.postimg.cc/zvX8BnDD/IMG-20200524-WA0018.jpg",
-      "https://i.postimg.cc/QxZBsvKZ/5-M2517.jpg",
       "https://i.postimg.cc/hPRJgNQQ/IMG-20200524-WA0035.jpg",
-      "https://i.postimg.cc/ncfsZN9z/IMG-20200524-WA0019.jpg",
       "https://i.postimg.cc/7YrCDjJ4/9-M2517.jpg",
       "https://i.postimg.cc/hPRJgNQB/3-M2517.jpg",
-      "https://i.postimg.cc/28NqmgLf/3.jpg",
-      "https://i.postimg.cc/yYCJB236/20221122-DJI-0129.jpg",
     ]
   },
   {
@@ -1391,14 +1464,13 @@ const PROJECTS_LIST = [
     title: "Sefirot 5",
     address: "PELLEGRINI 2618",
     category: "Desarrollo Inmobiliario",
-    mainImage: "https://i.postimg.cc/8kyQnBbG/Generated-Image-May-18-2026-9-51AM.png",
+    mainImage: "https://i.postimg.cc/QxNSdWSW/Generated-Image-May-24-2026-6-58PM.png",
     description: "Vida urbana con vistas inmejorables. Ubicado sobre una de las arterias más importantes de Rosario, SEF 5 ofrece una conexión directa con la recreación y los servicios. Arquitectura de alta gama con un enfoque en la durabilidad y el estilo de vida cosmopolita.",
     gallery: [
       "https://i.postimg.cc/Qtfvfvs5/Azotea-2.jpg",
       "https://i.postimg.cc/3JsVfXMP/Ingreso-1.jpg",
       "https://i.postimg.cc/cJmzJPK0/Interior-piso-2.jpg",
       "https://i.postimg.cc/NFWJVcn8/6.jpg",
-      "https://i.postimg.cc/QxNSdWSW/Generated-Image-May-24-2026-6-58PM.png",
       "https://i.postimg.cc/qRnk5MLG/5.jpg",
       "https://i.postimg.cc/d1dqxtB2/3.jpg",
       "https://i.postimg.cc/3RpKcJBB/Azotea-1.jpg",
@@ -1414,7 +1486,6 @@ const PROJECTS_LIST = [
     mainImage: "https://i.postimg.cc/nrYWWxzy/Generated-Image-May-24-2026-6-05PM.png",
     description: "Innovación en cada metro cuadrado. Un proyecto que destaca por su geometría limpia y soluciones espaciales inteligentes. SEF 6 es la opción ideal para inversores y residentes que buscan una ubicación dinámica con un estándar de construcción superior.",
     gallery: [
-      "https://i.postimg.cc/v86prqkW/DJI-0022.jpg",
       "https://i.postimg.cc/2jBPQcMW/DJI-0025.jpg",
       "https://i.postimg.cc/Pf8BW39Y/DJI-0033.jpg",
       "https://i.postimg.cc/YqKTbNBJ/MG-3652-HDR.jpg",
@@ -1425,7 +1496,6 @@ const PROJECTS_LIST = [
       "https://i.postimg.cc/438qFXzz/MG-3637-HDR.jpg",
       "https://i.postimg.cc/ZqYXcWyR/MG-3634-HDR.jpg",
       "https://i.postimg.cc/sftdrfbY/MG-3181-HDR.jpg",
-      "https://i.postimg.cc/GhG0hwCy/MG-3613-HDR.jpg",
       "https://i.postimg.cc/xjWD2jB4/MG-3609.jpg",
       "https://i.postimg.cc/mZ0fsZKV/MG-3622-HDR.jpg",
     ]
@@ -1436,10 +1506,9 @@ const PROJECTS_LIST = [
     address: "OV LAGOS 1261",
     category: "Desarrollo Inmobiliario",
     mainImage: "https://i.postimg.cc/brHg6tQX/678.png",
-    description: "El estándar de calidad que estabas buscando. Continuando con nuestra línea de excelencia sobre Av. Ovidio Lagos, este edificio se centra en la amplitud de sus ambientes and la selección de materiales nobles, garantizando una inversión segura y una habitabilidad excepcional.",
+    description: "El estándar de calidad que estabas buscando. Continuando con nuestra línea de excelencia sobre Av. Ovidio Lagos, este edificio se centra en la amplitud de sus ambientes y la selección de materiales nobles, garantizando una inversión segura y una habitabilidad excepcional.",
     gallery: [
       "https://i.postimg.cc/gks483zR/IMG-20250530-WA0084.jpg",
-      "https://i.postimg.cc/QdnbnsWt/IMG-20250530-WA0122.jpg",
       "https://i.postimg.cc/6q0VVNXp/IMG-20250530-WA0056.jpg",
       "https://i.postimg.cc/7ZtqW7tp/FACHADA.jpg",
       "https://i.postimg.cc/6Q7BJ3FP/FACHADA.jpg",
@@ -1567,7 +1636,7 @@ const ProjectsPage = () => {
               />
 
               {(project.badge || project.percentage) && (
-                <div className="absolute top-6 left-6 z-40 group-hover:opacity-0 transition-opacity duration-300 flex gap-2">
+                <div className="absolute top-6 left-6 z-40 md:group-hover:opacity-0 transition-opacity duration-300 flex gap-2">
                   {project.badge && (
                     <div className="bg-primary text-white px-4 py-1.5 rounded-full border border-primary/30 shadow-lg flex items-center justify-center">
                       <span className="font-black tracking-[0.2em] uppercase text-[10px] text-center">
@@ -1586,7 +1655,7 @@ const ProjectsPage = () => {
               )}
 
               {/* Number Circle - Bottom Right */}
-              <div className="absolute bottom-6 right-6 z-10 w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-white/50 overflow-hidden shadow-2xl group-hover:opacity-0 transition-opacity duration-300 bg-white/20 backdrop-blur-sm">
+              <div className="absolute bottom-6 right-6 z-10 w-12 h-12 md:w-14 md:h-14 rounded-full border-2 border-white/50 overflow-hidden shadow-2xl md:group-hover:opacity-0 transition-opacity duration-300 bg-white/20 backdrop-blur-sm">
                 <img 
                   src={CIRCULAR_PROJECT_IMAGES.find(img => img.id === project.id)?.url} 
                   alt={`Sefirot ${project.id}`}
@@ -1595,14 +1664,15 @@ const ProjectsPage = () => {
                 />
               </div>
               
-              <div className="absolute inset-0 bg-stone-950/60 opacity-0 group-hover:opacity-100 transition-all duration-700 backdrop-blur-[3px] z-20" />
+              {/* Permanent elegant gradient on mobile, interactive dynamic overlay on hover for desktop */}
+              <div className="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/20 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-700 md:backdrop-blur-[2px] z-20" />
               
-              <div className="absolute inset-0 p-10 flex flex-col justify-between opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0 z-30">
+              <div className="absolute inset-0 p-6 sm:p-8 md:p-10 flex flex-col justify-between opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-500 translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 z-30">
                 <div className="flex justify-between items-start">
-                  <span className="text-white/60 font-black uppercase tracking-[0.4em] text-[10px]">
+                  <span className="text-white/80 md:text-white/60 font-black uppercase tracking-[0.3em] sm:tracking-[0.4em] text-[10px]">
                     {project.category}
                   </span>
-                  <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white">
+                  <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white flex-shrink-0">
                     <ArrowUpRight size={18} />
                   </div>
                 </div>
@@ -1610,10 +1680,16 @@ const ProjectsPage = () => {
                 <div>
                   <motion.h3 
                     layoutId={`title-${project.id}`}
-                    className="text-4xl font-bold text-white tracking-tighter mb-2"
+                    className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tighter mb-2"
                   >
                     {project.title}
                   </motion.h3>
+                  
+                  {project.address && (
+                    <p className="text-stone-300/90 font-bold uppercase tracking-[0.2em] text-[90%] sm:text-[10px] mb-3 leading-none">
+                      {project.address}
+                    </p>
+                  )}
                   <div className="w-12 h-1 bg-primary rounded-full" />
                 </div>
               </div>
@@ -1681,7 +1757,13 @@ const ProjectsPage = () => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
                 >
-                  <span className="text-primary font-black uppercase tracking-[0.5em] text-[10px] mb-6 block">Proyecto en Detalle</span>
+                  <span className="text-primary font-black uppercase tracking-[0.5em] text-[10px] mb-6 block">
+                    {selectedProject?.id === 8 
+                      ? "Proyecto en Obra" 
+                      : selectedProject?.id === 9 
+                        ? "Proyecto en Pozo" 
+                        : "Proyecto en Detalle"}
+                  </span>
                   {selectedProject?.badge && (
                     <div className="mb-6">
                       <span className="bg-primary/10 text-primary px-4 py-1.5 rounded-full text-[10px] font-black tracking-[0.2em] uppercase border border-primary/20 shadow-sm">
