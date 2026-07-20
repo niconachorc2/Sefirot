@@ -1208,7 +1208,7 @@ const DepartmentsPage = () => {
     return matchBuilding && matchType && matchStatus;
   });
 
-  const buildings = Array.from({ length: 9 }, (_, i) => (i + 1).toString());
+  const buildings = Array.from({ length: 3 }, (_, i) => (i + 7).toString());
   const types = Array.from(new Set(DEPARTMENTS_LIST.map(d => d.type)));
   const statuses = Array.from(new Set(DEPARTMENTS_LIST.map(d => d.status)));
 
