@@ -1070,8 +1070,6 @@ const ProjectCarousel = () => {
 };
 
 const DepartmentCard = ({ dept }: { dept: any; key?: any }) => {
-  const [selectedAreaType, setSelectedAreaType] = useState<'total' | 'cubierta' | 'descubierta'>('total');
-
   return (
     <motion.div
       layout
@@ -1091,21 +1089,21 @@ const DepartmentCard = ({ dept }: { dept: any; key?: any }) => {
         <div className="absolute top-6 left-6 z-10 flex flex-wrap gap-2">
           <span className={`px-4 py-1.5 rounded-full text-[10px] font-black tracking-[0.2em] uppercase shadow-lg border backdrop-blur-md ${
             dept.status === 'Disponible' 
-              ? 'bg-green-500/20 text-green-600 border-green-500/30' 
+              ? 'bg-emerald-500/20 text-emerald-800 border-emerald-500/30 bg-white/90' 
               : dept.status === 'Proyecto en pozo'
-              ? 'bg-purple-500/20 text-purple-700 border-purple-500/30'
+              ? 'bg-white text-primary border-white/80 shadow-md'
               : dept.status === 'Proyecto con entrega proxima'
-              ? 'bg-sky-500/20 text-sky-700 border-sky-500/30'
+              ? 'bg-white text-sky-800 border-white/80 shadow-md'
               : dept.status === 'Reservado'
-              ? 'bg-amber-500/20 text-amber-600 border-amber-500/30'
-              : 'bg-stone-500/20 text-stone-600 border-stone-500/30'
+              ? 'bg-amber-500/20 text-amber-800 border-amber-500/30 bg-white/90'
+              : 'bg-stone-500/20 text-stone-700 border-stone-500/30 bg-white/90'
           }`}>
             {dept.status}
           </span>
-          <span className={`px-3 py-1.5 rounded-full text-[9px] font-bold tracking-wider uppercase shadow-lg border backdrop-blur-md ${
+          <span className={`px-3 py-1.5 rounded-full text-[9px] font-bold tracking-wider uppercase shadow-md border ${
             dept.building <= 7 
-              ? 'bg-emerald-500/20 text-emerald-700 border-emerald-500/30'
-              : 'bg-primary/20 text-primary border-primary/30'
+              ? 'bg-white text-emerald-800 border-white/80'
+              : 'bg-stone-100/95 text-stone-800 border-stone-300'
           }`}>
             {dept.building <= 7 ? 'Terminada' : 'En construcción'}
           </span>
@@ -1117,67 +1115,58 @@ const DepartmentCard = ({ dept }: { dept: any; key?: any }) => {
         </div>
       </div>
 
-      <div className="p-10 flex flex-col flex-1">
+      <div className="p-8 md:p-10 flex flex-col flex-1">
         <div className="flex justify-between items-start mb-6">
           <div>
-            <h3 className="text-3xl font-bold tracking-tighter text-stone-900 mb-2 flex flex-col leading-none">
+            <h3 className="text-3xl font-bold tracking-tighter text-stone-900 mb-1.5 flex flex-col leading-none">
               <span className="block">Piso {dept.floor}</span>
               <span className="text-primary italic font-medium text-2xl block mt-1.5">Unidad {dept.unit}</span>
             </h3>
-            <p className="text-stone-400 font-bold uppercase tracking-[0.3em] text-[10px]">{dept.type}</p>
+            <p className="text-stone-500 font-bold uppercase tracking-[0.25em] text-[10px]">{dept.type}</p>
+            {dept.orientation && (
+              <p className="text-stone-400 font-medium text-xs mt-1">{dept.orientation}</p>
+            )}
           </div>
-          <div className="text-right flex flex-col items-end min-w-[120px]">
-            <div className="overflow-hidden h-8 flex items-center justify-end">
-              <AnimatePresence mode="wait">
-                <motion.span
-                  key={selectedAreaType}
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -8 }}
-                  transition={{ duration: 0.25, ease: "easeOut" }}
-                  className="block text-2xl font-black text-stone-900 tracking-tighter"
-                >
-                  {selectedAreaType === 'total' 
-                    ? (dept.supTotal || dept.area) 
-                    : selectedAreaType === 'cubierta' 
-                      ? (dept.supCubierta || dept.area) 
-                      : (dept.supDescubierta || '0m²')}
-                </motion.span>
-              </AnimatePresence>
-            </div>
-            <div className="flex flex-col gap-1 mt-2.5 bg-stone-50 p-1 rounded-xl border border-stone-100 w-20 relative">
-              {(['total', 'cubierta', 'descubierta'] as const).map((type) => {
-                const isActive = selectedAreaType === type;
-                return (
-                  <motion.button
-                    key={type}
-                    onClick={() => setSelectedAreaType(type)}
-                    whileTap={{ scale: 0.92 }}
-                    className={`relative text-[8px] font-black uppercase tracking-wider py-1.5 px-2 rounded-lg text-center transition-colors duration-300 z-10 w-full ${
-                      isActive
-                        ? 'text-white font-extrabold'
-                        : 'text-stone-400 hover:text-stone-700 hover:bg-stone-100/30'
-                    }`}
-                  >
-                    {isActive && (
-                      <motion.div
-                        layoutId={`activeBG-${dept.id}`}
-                        className="absolute inset-0 bg-primary rounded-lg -z-10 shadow-sm"
-                        transition={{ type: "spring", stiffness: 380, damping: 26 }}
-                      />
-                    )}
-                    <motion.span 
-                      className="relative z-20 block text-[8px]"
-                      animate={isActive ? { scale: [1, 1.15, 1], y: [0, -1, 0] } : { scale: 1, y: 0 }}
-                      transition={{ duration: 0.3, ease: "easeOut" }}
-                    >
-                      {type === 'total' ? 'Total' : type === 'cubierta' ? 'Cubierta' : 'Descubierta'}
-                    </motion.span>
-                  </motion.button>
-                );
-              })}
-            </div>
+          <div className="text-right flex flex-col items-end">
+            <span className="text-[10px] font-black tracking-[0.2em] uppercase text-stone-400 block mb-0.5">Total</span>
+            <span className="text-3xl font-black text-stone-900 tracking-tight block">
+              {dept.supTotal} m²
+            </span>
           </div>
+        </div>
+
+        {/* Breakdown details */}
+        <div className="bg-stone-50/80 rounded-2xl p-4 border border-stone-100 mb-6 space-y-2">
+          {dept.supCubiertos && (
+            <div className="flex justify-between items-center text-xs">
+              <span className="text-stone-500 font-medium">Cubiertos:</span>
+              <span className="text-stone-900 font-bold">{dept.supCubiertos} m²</span>
+            </div>
+          )}
+          {dept.supExclusivos && (
+            <div className="flex justify-between items-center text-xs">
+              <span className="text-stone-500 font-medium">Exclusivos:</span>
+              <span className="text-stone-900 font-bold">{dept.supExclusivos} m²</span>
+            </div>
+          )}
+          {dept.supBalcon && (
+            <div className="flex justify-between items-center text-xs">
+              <span className="text-stone-500 font-medium">Balcón:</span>
+              <span className="text-stone-900 font-bold">{dept.supBalcon} m²</span>
+            </div>
+          )}
+          {dept.supPatio && (
+            <div className="flex justify-between items-center text-xs">
+              <span className="text-stone-500 font-medium">Patio:</span>
+              <span className="text-stone-900 font-bold">{dept.supPatio} m²</span>
+            </div>
+          )}
+          {dept.supTerrazaParrilla && (
+            <div className="flex justify-between items-center text-xs">
+              <span className="text-stone-500 font-medium">Terraza-parrilla:</span>
+              <span className="text-stone-900 font-bold">{dept.supTerrazaParrilla} m²</span>
+            </div>
+          )}
         </div>
 
         <div className="mt-auto space-y-6">
@@ -1384,30 +1373,252 @@ const CIRCULAR_PROJECT_IMAGES = [
  * Unidades disponibles para filtrar.
  */
 const DEPARTMENTS_LIST = [
-  // Sefirot 9 (Disponibles para Venta)
-  { id: 912, building: 9, floor: '1', unit: '02', type: '1 Dormitorio', area: '52m²', supTotal: '52m²', supCubierta: '46m²', supDescubierta: '6m²', status: 'Proyecto en pozo', image: 'https://i.postimg.cc/bNj0ZSgh/LIVING-COMEDOR-PISO-01-2.png' },
-  { id: 913, building: 9, floor: '1', unit: '03', type: 'Monoambiente', area: '38m²', supTotal: '38m²', supCubierta: '34m²', supDescubierta: '4m²', status: 'Proyecto en pozo', image: 'https://i.postimg.cc/R0gzYWLr/HALL-INGRESO-2.png' },
-  { id: 922, building: 9, floor: '2', unit: '02', type: '1 Dormitorio', area: '52m²', supTotal: '52m²', supCubierta: '46m²', supDescubierta: '6m²', status: 'Proyecto en pozo', image: 'https://i.postimg.cc/fTh7VSCQ/PISO-4-DORMITORIO.png' },
-  { id: 923, building: 9, floor: '2', unit: '03', type: 'Monoambiente', area: '38m²', supTotal: '38m²', supCubierta: '34m²', supDescubierta: '4m²', status: 'Proyecto en pozo', image: 'https://i.postimg.cc/8CZVY7Bq/QUINCHO-2.png' },
-  { id: 931, building: 9, floor: '3', unit: '01', type: '2 Dormitorios', area: '75m²', supTotal: '75m²', supCubierta: '67m²', supDescubierta: '8m²', status: 'Proyecto en pozo', image: 'https://i.postimg.cc/8PVd7f4V/PISO-04.png' },
-  { id: 933, building: 9, floor: '3', unit: '03', type: 'Monoambiente', area: '38m²', supTotal: '38m²', supCubierta: '34m²', supDescubierta: '4m²', status: 'Proyecto en pozo', image: 'https://i.postimg.cc/Wb6GgpYR/QUINCHO-1.png' },
-  { id: 952, building: 9, floor: '5', unit: '02', type: '1 Dormitorio', area: '52m²', supTotal: '52m²', supCubierta: '46m²', supDescubierta: '6m²', status: 'Proyecto en pozo', image: 'https://i.postimg.cc/VLc9J0gY/PISO-9.png' },
-  { id: 981, building: 9, floor: '8', unit: '01', type: '2 Dormitorios', area: '75m²', supTotal: '75m²', supCubierta: '67m²', supDescubierta: '8m²', status: 'Proyecto en pozo', image: 'https://i.postimg.cc/BQG5jPp9/PISO-9-2.png' },
-  { id: 982, building: 9, floor: '8', unit: '02', type: '1 Dormitorio', area: '52m²', supTotal: '52m²', supCubierta: '46m²', supDescubierta: '6m²', status: 'Proyecto en pozo', image: 'https://i.postimg.cc/8CZVY7Bq/QUINCHO-2.png' },
+  // SEFIROT 9 (Montevideo 1876) - Proyecto en pozo
+  { 
+    id: 912, 
+    building: 9, 
+    floor: '01', 
+    unit: '02', 
+    type: '1 Dormitorio', 
+    orientation: 'Frente/Contrafrente',
+    supTotal: '74,5', 
+    supCubiertos: '52,7', 
+    supBalcon: '6,05', 
+    supPatio: '15,75',
+    status: 'Proyecto en pozo', 
+    image: 'https://i.postimg.cc/bNj0ZSgh/LIVING-COMEDOR-PISO-01-2.png' 
+  },
+  { 
+    id: 913, 
+    building: 9, 
+    floor: '01', 
+    unit: '03', 
+    type: '1 Dormitorio', 
+    orientation: 'Contrafrente',
+    supTotal: '88,05', 
+    supCubiertos: '45,1', 
+    supBalcon: '6,3', 
+    supPatio: '36,65',
+    status: 'Proyecto en pozo', 
+    image: 'https://i.postimg.cc/R0gzYWLr/HALL-INGRESO-2.png' 
+  },
+  { 
+    id: 922, 
+    building: 9, 
+    floor: '02', 
+    unit: '02', 
+    type: '1 Dormitorio', 
+    orientation: 'Frente/Contrafrente',
+    supTotal: '58,75', 
+    supCubiertos: '52,7', 
+    supBalcon: '6,05', 
+    status: 'Proyecto en pozo', 
+    image: 'https://i.postimg.cc/fTh7VSCQ/PISO-4-DORMITORIO.png' 
+  },
+  { 
+    id: 923, 
+    building: 9, 
+    floor: '02', 
+    unit: '03', 
+    type: '1 Dormitorio', 
+    orientation: 'Contrafrente',
+    supTotal: '51,4', 
+    supCubiertos: '45,1', 
+    supBalcon: '6,3', 
+    status: 'Proyecto en pozo', 
+    image: 'https://i.postimg.cc/8CZVY7Bq/QUINCHO-2.png' 
+  },
+  { 
+    id: 931, 
+    building: 9, 
+    floor: '03', 
+    unit: '01', 
+    type: '1 Dormitorio', 
+    orientation: 'Frente',
+    supTotal: '50,8', 
+    supCubiertos: '44,75', 
+    supBalcon: '6,05', 
+    status: 'Proyecto en pozo', 
+    image: 'https://i.postimg.cc/8PVd7f4V/PISO-04.png' 
+  },
+  { 
+    id: 933, 
+    building: 9, 
+    floor: '03', 
+    unit: '03', 
+    type: '1 Dormitorio', 
+    orientation: 'Contrafrente',
+    supTotal: '51,4', 
+    supCubiertos: '45,1', 
+    supBalcon: '6,3', 
+    status: 'Proyecto en pozo', 
+    image: 'https://i.postimg.cc/Wb6GgpYR/QUINCHO-1.png' 
+  },
+  { 
+    id: 952, 
+    building: 9, 
+    floor: '05', 
+    unit: '02', 
+    type: '2 Dormitorios', 
+    orientation: 'Contrafrente',
+    supTotal: '86,45', 
+    supCubiertos: '77', 
+    supBalcon: '9,45', 
+    status: 'Proyecto en pozo', 
+    image: 'https://i.postimg.cc/VLc9J0gY/PISO-9.png' 
+  },
+  { 
+    id: 981, 
+    building: 9, 
+    floor: '08', 
+    unit: '01', 
+    type: '2 Dormitorios', 
+    orientation: 'Frente',
+    supTotal: '82,7', 
+    supCubiertos: '73,45', 
+    supBalcon: '9,25', 
+    status: 'Proyecto en pozo', 
+    image: 'https://i.postimg.cc/BQG5jPp9/PISO-9-2.png' 
+  },
+  { 
+    id: 982, 
+    building: 9, 
+    floor: '08', 
+    unit: '02', 
+    type: '2 Dormitorios', 
+    orientation: 'Contrafrente',
+    supTotal: '86,45', 
+    supCubiertos: '65,05', 
+    supBalcon: '21,4', 
+    status: 'Proyecto en pozo', 
+    image: 'https://i.postimg.cc/8CZVY7Bq/QUINCHO-2.png' 
+  },
   
-  // Sefirot 8 (Disponibles para Venta)
-  { id: 841, building: 8, floor: '4', unit: '01', type: '1 Dormitorio', area: '48m²', supTotal: '48m²', supCubierta: '44m²', supDescubierta: '4m²', status: 'Proyecto con entrega proxima', image: 'https://i.postimg.cc/J0XQ9bQk/PISO-4MONO-copia.png' },
-  { id: 851, building: 8, floor: '5', unit: '01', type: '1 Dormitorio', area: '48m²', supTotal: '48m²', supCubierta: '44m²', supDescubierta: '4m²', status: 'Proyecto con entrega proxima', image: 'https://i.postimg.cc/D0GctqcW/SEF8-P9-1-DORMITORIO.jpg' },
-  { id: 861, building: 8, floor: '6', unit: '01', type: '1 Dormitorio', area: '48m²', supTotal: '48m²', supCubierta: '44m²', supDescubierta: '4m²', status: 'Proyecto con entrega proxima', image: 'https://i.postimg.cc/LX48YdNn/SEF8-EXTERIOR-P3-BALCON-OFICINA.jpg' },
-  { id: 871, building: 8, floor: '7', unit: '01', type: '2 Dormitorios', area: '82m²', supTotal: '82m²', supCubierta: '74m²', supDescubierta: '8m²', status: 'Proyecto con entrega proxima', image: 'https://i.postimg.cc/C584Wj4s/PISO-6-2-DORM.png' },
-  { id: 881, building: 8, floor: '8', unit: '01', type: '2 Dormitorios', area: '82m²', supTotal: '82m²', supCubierta: '74m²', supDescubierta: '8m²', status: 'Proyecto con entrega proxima', image: 'https://i.postimg.cc/nLGLhVYJ/SEF8-EXTERIOR-CONTRAFRENTE-01.jpg' },
+  // SEFIROT 8 (M. Rodríguez 1680) - Proyecto con entrega proxima
+  { 
+    id: 841, 
+    building: 8, 
+    floor: '04', 
+    unit: '01', 
+    type: 'Monoambiente', 
+    orientation: 'Frente',
+    supTotal: '34,5', 
+    supCubiertos: '30', 
+    supBalcon: '4,5', 
+    status: 'Proyecto con entrega proxima', 
+    image: 'https://i.postimg.cc/J0XQ9bQk/PISO-4MONO-copia.png' 
+  },
+  { 
+    id: 861, 
+    building: 8, 
+    floor: '06', 
+    unit: '01', 
+    type: '2 Dormitorios', 
+    orientation: 'Frente/Contrafrente',
+    supTotal: '103', 
+    supCubiertos: '83', 
+    supBalcon: '12', 
+    supTerrazaParrilla: '8',
+    status: 'Proyecto con entrega proxima', 
+    image: 'https://i.postimg.cc/LX48YdNn/SEF8-EXTERIOR-P3-BALCON-OFICINA.jpg' 
+  },
+  { 
+    id: 871, 
+    building: 8, 
+    floor: '07', 
+    unit: '01', 
+    type: '2 Dormitorios', 
+    orientation: 'Frente/Contrafrente',
+    supTotal: '103', 
+    supCubiertos: '83', 
+    supBalcon: '12', 
+    supTerrazaParrilla: '8',
+    status: 'Proyecto con entrega proxima', 
+    image: 'https://i.postimg.cc/C584Wj4s/PISO-6-2-DORM.png' 
+  },
+  { 
+    id: 881, 
+    building: 8, 
+    floor: '08', 
+    unit: '01', 
+    type: '2 Dormitorios', 
+    orientation: 'Frente/Contrafrente',
+    supTotal: '103', 
+    supCubiertos: '83', 
+    supBalcon: '12', 
+    supTerrazaParrilla: '8',
+    status: 'Proyecto con entrega proxima', 
+    image: 'https://i.postimg.cc/nLGLhVYJ/SEF8-EXTERIOR-CONTRAFRENTE-01.jpg' 
+  },
   
-  // Sefirot 7 (Disponibles para Venta)
-  { id: 711, building: 7, floor: '1', unit: '01', type: '1 Dormitorio', area: '50m²', supTotal: '50m²', supCubierta: '45m²', supDescubierta: '5m²', status: 'Disponible', image: 'https://i.postimg.cc/Mp3zFRrk/HALL-INGRESO.jpg' },
-  { id: 712, building: 7, floor: '1', unit: '02', type: '2 Dormitorios', area: '76m²', supTotal: '76m²', supCubierta: '68m²', supDescubierta: '8m²', status: 'Disponible', image: 'https://i.postimg.cc/0N69RQLS/QUINCHO-2.jpg' },
-  { id: 762, building: 7, floor: '6', unit: '02', type: '1 Dormitorio', area: '50m²', supTotal: '50m²', supCubierta: '45m²', supDescubierta: '5m²', status: 'Disponible', image: 'https://i.postimg.cc/gks483zR/IMG-20250530-WA0084.jpg' },
-  { id: 791, building: 7, floor: '9', unit: '01', type: '2 Dormitorios', area: '76m²', supTotal: '76m²', supCubierta: '68m²', supDescubierta: '8m²', status: 'Disponible', image: 'https://i.postimg.cc/FK2N9v4c/PILETA.png' },
-  { id: 7101, building: 7, floor: '10', unit: '02', type: 'Semipiso Premium', area: '112m²', supTotal: '112m²', supCubierta: '96m²', supDescubierta: '16m²', status: 'Disponible', image: 'https://i.postimg.cc/GpZdcRCp/Whats-App-Image-2026-04-22-at-15-11-49.jpg' },
+  // SEFIROT 7 (Ov. Lagos 1269) - Disponible
+  { 
+    id: 711, 
+    building: 7, 
+    floor: '01', 
+    unit: '01', 
+    type: '1 Dormitorio', 
+    orientation: 'Frente/Contrafrente',
+    supTotal: '78,85', 
+    supExclusivos: '50,3', 
+    supBalcon: '7,5', 
+    supPatio: '21,05',
+    status: 'Disponible', 
+    image: 'https://i.postimg.cc/Mp3zFRrk/HALL-INGRESO.jpg' 
+  },
+  { 
+    id: 712, 
+    building: 7, 
+    floor: '01', 
+    unit: '02', 
+    type: '1 Dormitorio', 
+    orientation: 'Contrafrente',
+    supTotal: '89,75', 
+    supExclusivos: '51,5', 
+    supPatio: '38,25',
+    status: 'Disponible', 
+    image: 'https://i.postimg.cc/0N69RQLS/QUINCHO-2.jpg' 
+  },
+  { 
+    id: 762, 
+    building: 7, 
+    floor: '06', 
+    unit: '02', 
+    type: '1 Dormitorio', 
+    orientation: 'Frente/Contrafrente',
+    supTotal: '50,7', 
+    supExclusivos: '45,8', 
+    supBalcon: '4,9', 
+    status: 'Disponible', 
+    image: 'https://i.postimg.cc/gks483zR/IMG-20250530-WA0084.jpg' 
+  },
+  { 
+    id: 791, 
+    building: 7, 
+    floor: '09', 
+    unit: '01', 
+    type: '2 Dormitorios', 
+    orientation: 'Frente/Contrafrente',
+    supTotal: '100', 
+    supExclusivos: '77,2', 
+    supBalcon: '7,5', 
+    supPatio: '15,3',
+    status: 'Disponible', 
+    image: 'https://i.postimg.cc/FK2N9v4c/PILETA.png' 
+  },
+  { 
+    id: 7101, 
+    building: 7, 
+    floor: '10', 
+    unit: '01', 
+    type: '2 Dormitorios', 
+    orientation: 'Frente',
+    supTotal: '93,3', 
+    supExclusivos: '74,6', 
+    supBalcon: '18,7', 
+    status: 'Disponible', 
+    image: 'https://i.postimg.cc/GpZdcRCp/Whats-App-Image-2026-04-22-at-15-11-49.jpg' 
+  },
 ];
 
 /**
