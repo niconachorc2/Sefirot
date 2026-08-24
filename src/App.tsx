@@ -91,7 +91,7 @@ const Navbar = () => {
           })}
           <MagneticButton>
             <motion.a
-              href="https://api.whatsapp.com/send?phone=5493416910558&text=Hola!%20Me%20comunico%20desde%20la%20web!"
+              href="https://api.whatsapp.com/send?phone=5493413655282&text=Hola!%20Me%20comunico%20desde%20la%20web!"
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, scale: 0.9 }}
@@ -145,7 +145,7 @@ const Navbar = () => {
               </motion.div>
             ))}
             <motion.a
-              href="https://api.whatsapp.com/send?phone=5493416910558&text=Hola!%20Me%20comunico%20desde%20la%20web!"
+              href="https://api.whatsapp.com/send?phone=5493413655282&text=Hola!%20Me%20comunico%20desde%20la%20web!"
               target="_blank"
               rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
@@ -605,8 +605,8 @@ const Contact = () => {
                 { 
                   icon: <Phone size={24} />, 
                   label: "Administración (Celular)", 
-                  val: "+54 9 341 691-0558", 
-                  href: "https://api.whatsapp.com/send?phone=5493416910558&text=Hola!%20Me%20comunico%20con%20Administración" 
+                  val: "+54 9 341 365-5282", 
+                  href: "https://api.whatsapp.com/send?phone=5493413655282&text=Hola!%20Me%20comunico%20con%20Administración" 
                 },
                 { 
                   icon: <Mail size={24} />, 
@@ -716,7 +716,7 @@ const Footer = () => {
           </div>
           <div>
             <p className="text-[10px] uppercase tracking-[0.4em] font-black mb-2 text-stone-500">Administración Celular</p>
-            <p className="font-medium text-white text-base">+54 9 341 691-0558</p>
+            <p className="font-medium text-white text-base">+54 9 341 365-5282</p>
           </div>
         </div>
 
@@ -730,7 +730,7 @@ const Footer = () => {
           <div className="flex gap-6">
             {[
               { name: 'Instagram', url: 'https://www.instagram.com/sefirot.desarrollos' },
-              { name: 'WhatsApp', url: 'https://api.whatsapp.com/send?phone=5493416910558&text=Hola!%20Me%20comunico%20desde%20la%20web!' },
+              { name: 'WhatsApp', url: 'https://api.whatsapp.com/send?phone=5493413655282&text=Hola!%20Me%20comunico%20desde%20la%20web!' },
               { name: 'Facebook', url: 'https://www.facebook.com/sefirot.desarrollos' }
             ].map((social, i) => (
               <motion.a 
@@ -1174,7 +1174,7 @@ const DepartmentCard = ({ dept }: { dept: any; key?: any }) => {
           <div className="flex items-center gap-6">
             <MagneticButton className="flex-1">
               <a 
-                href={`https://api.whatsapp.com/send?phone=5493416910558&text=Hola!%20Me%20interesa%20la%20unidad%20Piso%20${dept.floor}%20Unidad%20${dept.unit}%20en%20Sefirot%20${dept.building}`}
+                href={`https://api.whatsapp.com/send?phone=5493413655282&text=Hola!%20Me%20interesa%20la%20unidad%20Piso%20${dept.floor}%20Unidad%20${dept.unit}%20en%20Sefirot%20${dept.building}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full bg-stone-950 text-white py-5 rounded-2xl font-black uppercase tracking-[0.3em] text-[10px] text-center block hover:bg-primary transition-colors"
