@@ -1088,15 +1088,26 @@ const DepartmentCard = ({ dept }: { dept: any; key?: any }) => {
           className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000"
           referrerPolicy="no-referrer"
         />
-        <div className="absolute top-6 left-6 z-10">
+        <div className="absolute top-6 left-6 z-10 flex flex-wrap gap-2">
           <span className={`px-4 py-1.5 rounded-full text-[10px] font-black tracking-[0.2em] uppercase shadow-lg border backdrop-blur-md ${
             dept.status === 'Disponible' 
               ? 'bg-green-500/20 text-green-600 border-green-500/30' 
+              : dept.status === 'Proyecto en pozo'
+              ? 'bg-purple-500/20 text-purple-700 border-purple-500/30'
+              : dept.status === 'Proyecto con entrega proxima'
+              ? 'bg-sky-500/20 text-sky-700 border-sky-500/30'
               : dept.status === 'Reservado'
               ? 'bg-amber-500/20 text-amber-600 border-amber-500/30'
               : 'bg-stone-500/20 text-stone-600 border-stone-500/30'
           }`}>
             {dept.status}
+          </span>
+          <span className={`px-3 py-1.5 rounded-full text-[9px] font-bold tracking-wider uppercase shadow-lg border backdrop-blur-md ${
+            dept.building <= 7 
+              ? 'bg-emerald-500/20 text-emerald-700 border-emerald-500/30'
+              : 'bg-primary/20 text-primary border-primary/30'
+          }`}>
+            {dept.building <= 7 ? 'Terminada' : 'En construcción'}
           </span>
         </div>
         <div className="absolute bottom-6 right-6 z-10">
@@ -1160,7 +1171,7 @@ const DepartmentCard = ({ dept }: { dept: any; key?: any }) => {
                       animate={isActive ? { scale: [1, 1.15, 1], y: [0, -1, 0] } : { scale: 1, y: 0 }}
                       transition={{ duration: 0.3, ease: "easeOut" }}
                     >
-                      {type === 'total' ? 'Total' : type === 'cubierta' ? 'Cub.' : 'Desc.'}
+                      {type === 'total' ? 'Total' : type === 'cubierta' ? 'Cubierta' : 'Descubierta'}
                     </motion.span>
                   </motion.button>
                 );
@@ -1204,7 +1215,15 @@ const DepartmentsPage = () => {
   const filteredDepartments = DEPARTMENTS_LIST.filter(dept => {
     const matchBuilding = filterBuilding === 'todos' || dept.building.toString() === filterBuilding;
     const matchType = filterType === 'todos' || dept.type === filterType;
-    const matchStatus = filterStatus === 'todos' || dept.status === filterStatus;
+    
+    // Sefirot 7 está terminado; Sefirot 8 y 9 están en construcción
+    let matchStatus = true;
+    if (filterStatus === 'terminadas') {
+      matchStatus = dept.building <= 7;
+    } else if (filterStatus === 'construccion') {
+      matchStatus = dept.building >= 8;
+    }
+    
     return matchBuilding && matchType && matchStatus;
   });
 
@@ -1269,17 +1288,16 @@ const DepartmentsPage = () => {
           </div>
 
           <div className="flex-1 w-full space-y-4">
-            <label className="text-[10px] uppercase tracking-[0.4em] text-stone-400 font-black ml-2">Estado</label>
+            <label className="text-[10px] uppercase tracking-[0.4em] text-stone-400 font-black ml-2">Estado de Obra</label>
             <div className="relative">
               <select 
                 value={filterStatus}
                 onChange={(e) => setFilterStatus(e.target.value)}
                 className="w-full bg-stone-50 border-none rounded-2xl py-4 px-6 text-stone-900 font-bold appearance-none focus:ring-2 focus:ring-primary/20 outline-none cursor-pointer"
               >
-                <option value="todos">Cualquier Estado</option>
-                {statuses.map(s => (
-                  <option key={s} value={s}>{s}</option>
-                ))}
+                <option value="todos">Todos los Estados</option>
+                <option value="terminadas">Unidades terminadas</option>
+                <option value="construccion">Unidades en construcción</option>
               </select>
               <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-stone-400">
                 <ChevronRight size={20} className="rotate-90" />
@@ -1367,27 +1385,26 @@ const CIRCULAR_PROJECT_IMAGES = [
  */
 const DEPARTMENTS_LIST = [
   // Sefirot 9 (Disponibles para Venta)
-  { id: 912, building: 9, floor: '1', unit: '02', type: '1 Dormitorio', area: '52m²', supTotal: '52m²', supCubierta: '46m²', supDescubierta: '6m²', status: 'Disponible', image: 'https://i.postimg.cc/bNj0ZSgh/LIVING-COMEDOR-PISO-01-2.png' },
-  { id: 913, building: 9, floor: '1', unit: '03', type: 'Monoambiente', area: '38m²', supTotal: '38m²', supCubierta: '34m²', supDescubierta: '4m²', status: 'Disponible', image: 'https://i.postimg.cc/R0gzYWLr/HALL-INGRESO-2.png' },
-  { id: 922, building: 9, floor: '2', unit: '02', type: '1 Dormitorio', area: '52m²', supTotal: '52m²', supCubierta: '46m²', supDescubierta: '6m²', status: 'Disponible', image: 'https://i.postimg.cc/fTh7VSCQ/PISO-4-DORMITORIO.png' },
-  { id: 923, building: 9, floor: '2', unit: '03', type: 'Monoambiente', area: '38m²', supTotal: '38m²', supCubierta: '34m²', supDescubierta: '4m²', status: 'Disponible', image: 'https://i.postimg.cc/8CZVY7Bq/QUINCHO-2.png' },
-  { id: 931, building: 9, floor: '3', unit: '01', type: '2 Dormitorios', area: '75m²', supTotal: '75m²', supCubierta: '67m²', supDescubierta: '8m²', status: 'Disponible', image: 'https://i.postimg.cc/8PVd7f4V/PISO-04.png' },
-  { id: 933, building: 9, floor: '3', unit: '03', type: 'Monoambiente', area: '38m²', supTotal: '38m²', supCubierta: '34m²', supDescubierta: '4m²', status: 'Disponible', image: 'https://i.postimg.cc/Wb6GgpYR/QUINCHO-1.png' },
-  { id: 952, building: 9, floor: '5', unit: '02', type: '1 Dormitorio', area: '52m²', supTotal: '52m²', supCubierta: '46m²', supDescubierta: '6m²', status: 'Disponible', image: 'https://i.postimg.cc/VLc9J0gY/PISO-9.png' },
-  { id: 981, building: 9, floor: '8', unit: '01', type: '2 Dormitorios', area: '75m²', supTotal: '75m²', supCubierta: '67m²', supDescubierta: '8m²', status: 'Disponible', image: 'https://i.postimg.cc/BQG5jPp9/PISO-9-2.png' },
-  { id: 982, building: 9, floor: '8', unit: '02', type: '1 Dormitorio', area: '52m²', supTotal: '52m²', supCubierta: '46m²', supDescubierta: '6m²', status: 'Disponible', image: 'https://i.postimg.cc/fbzN5cmM/FACHADA-2.png' },
+  { id: 912, building: 9, floor: '1', unit: '02', type: '1 Dormitorio', area: '52m²', supTotal: '52m²', supCubierta: '46m²', supDescubierta: '6m²', status: 'Proyecto en pozo', image: 'https://i.postimg.cc/bNj0ZSgh/LIVING-COMEDOR-PISO-01-2.png' },
+  { id: 913, building: 9, floor: '1', unit: '03', type: 'Monoambiente', area: '38m²', supTotal: '38m²', supCubierta: '34m²', supDescubierta: '4m²', status: 'Proyecto en pozo', image: 'https://i.postimg.cc/R0gzYWLr/HALL-INGRESO-2.png' },
+  { id: 922, building: 9, floor: '2', unit: '02', type: '1 Dormitorio', area: '52m²', supTotal: '52m²', supCubierta: '46m²', supDescubierta: '6m²', status: 'Proyecto en pozo', image: 'https://i.postimg.cc/fTh7VSCQ/PISO-4-DORMITORIO.png' },
+  { id: 923, building: 9, floor: '2', unit: '03', type: 'Monoambiente', area: '38m²', supTotal: '38m²', supCubierta: '34m²', supDescubierta: '4m²', status: 'Proyecto en pozo', image: 'https://i.postimg.cc/8CZVY7Bq/QUINCHO-2.png' },
+  { id: 931, building: 9, floor: '3', unit: '01', type: '2 Dormitorios', area: '75m²', supTotal: '75m²', supCubierta: '67m²', supDescubierta: '8m²', status: 'Proyecto en pozo', image: 'https://i.postimg.cc/8PVd7f4V/PISO-04.png' },
+  { id: 933, building: 9, floor: '3', unit: '03', type: 'Monoambiente', area: '38m²', supTotal: '38m²', supCubierta: '34m²', supDescubierta: '4m²', status: 'Proyecto en pozo', image: 'https://i.postimg.cc/Wb6GgpYR/QUINCHO-1.png' },
+  { id: 952, building: 9, floor: '5', unit: '02', type: '1 Dormitorio', area: '52m²', supTotal: '52m²', supCubierta: '46m²', supDescubierta: '6m²', status: 'Proyecto en pozo', image: 'https://i.postimg.cc/VLc9J0gY/PISO-9.png' },
+  { id: 981, building: 9, floor: '8', unit: '01', type: '2 Dormitorios', area: '75m²', supTotal: '75m²', supCubierta: '67m²', supDescubierta: '8m²', status: 'Proyecto en pozo', image: 'https://i.postimg.cc/BQG5jPp9/PISO-9-2.png' },
+  { id: 982, building: 9, floor: '8', unit: '02', type: '1 Dormitorio', area: '52m²', supTotal: '52m²', supCubierta: '46m²', supDescubierta: '6m²', status: 'Proyecto en pozo', image: 'https://i.postimg.cc/8CZVY7Bq/QUINCHO-2.png' },
   
   // Sefirot 8 (Disponibles para Venta)
-  { id: 841, building: 8, floor: '4', unit: '01', type: '1 Dormitorio', area: '48m²', supTotal: '48m²', supCubierta: '44m²', supDescubierta: '4m²', status: 'Disponible', image: 'https://i.postimg.cc/J0XQ9bQk/PISO-4MONO-copia.png' },
-  { id: 851, building: 8, floor: '5', unit: '01', type: '1 Dormitorio', area: '48m²', supTotal: '48m²', supCubierta: '44m²', supDescubierta: '4m²', status: 'Disponible', image: 'https://i.postimg.cc/D0GctqcW/SEF8-P9-1-DORMITORIO.jpg' },
-  { id: 861, building: 8, floor: '6', unit: '01', type: '1 Dormitorio', area: '48m²', supTotal: '48m²', supCubierta: '44m²', supDescubierta: '4m²', status: 'Disponible', image: 'https://i.postimg.cc/LX48YdNn/SEF8-EXTERIOR-P3-BALCON-OFICINA.jpg' },
-  { id: 871, building: 8, floor: '7', unit: '01', type: '2 Dormitorios', area: '82m²', supTotal: '82m²', supCubierta: '74m²', supDescubierta: '8m²', status: 'Disponible', image: 'https://i.postimg.cc/C584Wj4s/PISO-6-2-DORM.png' },
-  { id: 881, building: 8, floor: '8', unit: '01', type: '2 Dormitorios', area: '82m²', supTotal: '82m²', supCubierta: '74m²', supDescubierta: '8m²', status: 'Disponible', image: 'https://i.postimg.cc/nLGLhVYJ/SEF8-EXTERIOR-CONTRAFRENTE-01.jpg' },
+  { id: 841, building: 8, floor: '4', unit: '01', type: '1 Dormitorio', area: '48m²', supTotal: '48m²', supCubierta: '44m²', supDescubierta: '4m²', status: 'Proyecto con entrega proxima', image: 'https://i.postimg.cc/J0XQ9bQk/PISO-4MONO-copia.png' },
+  { id: 851, building: 8, floor: '5', unit: '01', type: '1 Dormitorio', area: '48m²', supTotal: '48m²', supCubierta: '44m²', supDescubierta: '4m²', status: 'Proyecto con entrega proxima', image: 'https://i.postimg.cc/D0GctqcW/SEF8-P9-1-DORMITORIO.jpg' },
+  { id: 861, building: 8, floor: '6', unit: '01', type: '1 Dormitorio', area: '48m²', supTotal: '48m²', supCubierta: '44m²', supDescubierta: '4m²', status: 'Proyecto con entrega proxima', image: 'https://i.postimg.cc/LX48YdNn/SEF8-EXTERIOR-P3-BALCON-OFICINA.jpg' },
+  { id: 871, building: 8, floor: '7', unit: '01', type: '2 Dormitorios', area: '82m²', supTotal: '82m²', supCubierta: '74m²', supDescubierta: '8m²', status: 'Proyecto con entrega proxima', image: 'https://i.postimg.cc/C584Wj4s/PISO-6-2-DORM.png' },
+  { id: 881, building: 8, floor: '8', unit: '01', type: '2 Dormitorios', area: '82m²', supTotal: '82m²', supCubierta: '74m²', supDescubierta: '8m²', status: 'Proyecto con entrega proxima', image: 'https://i.postimg.cc/nLGLhVYJ/SEF8-EXTERIOR-CONTRAFRENTE-01.jpg' },
   
   // Sefirot 7 (Disponibles para Venta)
   { id: 711, building: 7, floor: '1', unit: '01', type: '1 Dormitorio', area: '50m²', supTotal: '50m²', supCubierta: '45m²', supDescubierta: '5m²', status: 'Disponible', image: 'https://i.postimg.cc/Mp3zFRrk/HALL-INGRESO.jpg' },
   { id: 712, building: 7, floor: '1', unit: '02', type: '2 Dormitorios', area: '76m²', supTotal: '76m²', supCubierta: '68m²', supDescubierta: '8m²', status: 'Disponible', image: 'https://i.postimg.cc/0N69RQLS/QUINCHO-2.jpg' },
-  { id: 733, building: 7, floor: '3', unit: '03', type: 'Monoambiente', area: '36m²', supTotal: '36m²', supCubierta: '33m²', supDescubierta: '3m²', status: 'Disponible', image: 'https://i.postimg.cc/gks483zR/IMG-20250530-WA0084.jpg' },
   { id: 762, building: 7, floor: '6', unit: '02', type: '1 Dormitorio', area: '50m²', supTotal: '50m²', supCubierta: '45m²', supDescubierta: '5m²', status: 'Disponible', image: 'https://i.postimg.cc/gks483zR/IMG-20250530-WA0084.jpg' },
   { id: 791, building: 7, floor: '9', unit: '01', type: '2 Dormitorios', area: '76m²', supTotal: '76m²', supCubierta: '68m²', supDescubierta: '8m²', status: 'Disponible', image: 'https://i.postimg.cc/FK2N9v4c/PILETA.png' },
   { id: 7101, building: 7, floor: '10', unit: '02', type: 'Semipiso Premium', area: '112m²', supTotal: '112m²', supCubierta: '96m²', supDescubierta: '16m²', status: 'Disponible', image: 'https://i.postimg.cc/GpZdcRCp/Whats-App-Image-2026-04-22-at-15-11-49.jpg' },
@@ -1411,7 +1428,7 @@ const PROJECTS_LIST = [
       "https://i.postimg.cc/tCqHttjC/01.jpg",
       "https://i.postimg.cc/xTfSyy21/3-P2604.jpg",
       "https://i.postimg.cc/ZKbhFFSp/DSC-0557.jpg",
-      "https://i.postimg.cc/qM32wnXS/DSC-9195.jpg",
+      "https://i.postimg.cc/BQSGcc0v/1-P2604.jpg",
     ]
   },
   {
@@ -1439,8 +1456,6 @@ const PROJECTS_LIST = [
       "https://i.postimg.cc/zBhR7YTh/DSC-2506.jpg",
       "https://i.postimg.cc/C18f7pbb/DSC-2564.jpg",
       "https://i.postimg.cc/vBp44NPV/20200709-115824.jpg",
-      "https://i.postimg.cc/BQSGcc0v/1-P2604.jpg",
-      "https://i.postimg.cc/CKXqbxn1/06.jpg",
       "https://i.postimg.cc/zf6gTGHC/DSC-2602.jpg",
     ]
   },
@@ -1481,7 +1496,7 @@ const PROJECTS_LIST = [
   {
     id: 6,
     title: "Sefirot 6",
-    address: "OV LAGOS 1141",
+    address: "AV. OVIDIO LAGOS 1141",
     category: "Desarrollo Inmobiliario",
     mainImage: "https://i.postimg.cc/nrYWWxzy/Generated-Image-May-24-2026-6-05PM.png",
     description: "Innovación en cada metro cuadrado. Un proyecto que destaca por su geometría limpia y soluciones espaciales inteligentes. SEF 6 es la opción ideal para inversores y residentes que buscan una ubicación dinámica con un estándar de construcción superior.",
@@ -1503,7 +1518,7 @@ const PROJECTS_LIST = [
   {
     id: 7,
     title: "Sefirot 7",
-    address: "OV LAGOS 1261",
+    address: "AV. OVIDIO LAGOS 1261",
     category: "Desarrollo Inmobiliario",
     mainImage: "https://i.postimg.cc/brHg6tQX/678.png",
     description: "El estándar de calidad que estabas buscando. Continuando con nuestra línea de excelencia sobre Av. Ovidio Lagos, este edificio se centra en la amplitud de sus ambientes y la selección de materiales nobles, garantizando una inversión segura y una habitabilidad excepcional.",
@@ -1528,7 +1543,7 @@ const PROJECTS_LIST = [
     title: "Sefirot 8",
     address: "RODRIGUEZ 1680",
     category: "Desarrollo Inmobiliario",
-    badge: "PROXIMAMENTE",
+    badge: "AVANCES DE OBRA",
     percentage: "80%",
     mainImage: "https://i.postimg.cc/HLFsYw2L/Generated-Image-May-24-2026-6-07PM.png",
     description: "Exclusividad y diseño de autor. A pasos de los principales parques de la ciudad, SEF 8 propone una arquitectura abierta y luminosa. Cada unidad refleja nuestro compromiso con las terminaciones de lujo y la optimización de los espacios comunes.",
@@ -1550,12 +1565,11 @@ const PROJECTS_LIST = [
     title: "Sefirot 9",
     address: "MONTEVIDEO 1876",
     category: "Desarrollo Inmobiliario",
-    badge: "PROXIMAMENTE",
+    badge: "AVANCES DE OBRA",
     percentage: "5%",
     mainImage: "https://i.postimg.cc/8CZVY7Bq/QUINCHO-2.png",
     description: "Tu refugio en el centro de Rosario. Una propuesta que prioriza la intimidad y el confort. Con una ubicación estratégica cerca de facultades y centros comerciales, este edificio equilibra la funcionalidad con el sello estético característico de Sefirot.",
     gallery: [
-      "https://i.postimg.cc/fbzN5cmM/FACHADA-2.png",
       "https://i.postimg.cc/R0gzYWLr/HALL-INGRESO-2.png",
       "https://i.postimg.cc/d0sYn2rq/PISO-9-1.png",
       "https://i.postimg.cc/9fLjkDYc/QUINCHO-3.png",
