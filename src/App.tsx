@@ -563,7 +563,7 @@ const Contact = () => {
     const { nombre, email, mensaje } = formData;
     const subject = encodeURIComponent(`Consulta de ${nombre} - Sefirot Desarrollos`);
     const body = encodeURIComponent(`Nombre: ${nombre}\nEmail: ${email}\n\nMensaje:\n${mensaje}`);
-    window.location.href = `mailto:contacto@sefirot.com.ar?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:administracion@sefirot.com.ar?subject=${subject}&body=${body}`;
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -611,8 +611,8 @@ const Contact = () => {
                 { 
                   icon: <Mail size={24} />, 
                   label: "Escríbenos", 
-                  val: "contacto@sefirot.com.ar", 
-                  href: "mailto:contacto@sefirot.com.ar" 
+                  val: "administracion@sefirot.com.ar", 
+                  href: "mailto:administracion@sefirot.com.ar" 
                 }
               ].map((item, i) => (
                 <motion.a 
